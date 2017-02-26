@@ -45,9 +45,9 @@ public class Company {
         double totalCost = 0;
         for (Vehicle aVehicle: getVehicles()){
             totalCost += aVehicle.usageCost();
-            allVehicles += aVehicle.toString() + " with " 
-                    + aVehicle.getBookings().size() + " bookings with grand"
-                    + " total cost of " + totalCost;
+            allVehicles += String.format("%s with %d bookings with grand total "
+                    + "cost of RM%.2f", aVehicle.toString(), 
+                    aVehicle.getBookings().size(), totalCost);
         }
         return allVehicles;
     }

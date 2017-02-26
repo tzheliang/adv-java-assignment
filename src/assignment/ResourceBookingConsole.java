@@ -185,6 +185,8 @@ public class ResourceBookingConsole {
     
     public static void displayVehicle() {
         System.out.println("---Displaying all vehicles details---");
+        System.out.println(company1.allVehicles());
+        System.out.println("");
         
     }
     

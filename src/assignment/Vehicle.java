@@ -6,6 +6,7 @@
 package assignment;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -104,6 +105,38 @@ public abstract class Vehicle {
     
     public boolean add(Booking newBooking){
         return getBookings().add(newBooking);
+    }
+    
+    public boolean remove(Booking theBooking){
+        return getBookings().remove(theBooking);
+    }
+    
+    public Booking search(Date dateFrom, Date dateTo){
+        for(Booking aBooking: getBookings()){
+            if (aBooking.getDateFrom().equals(dateFrom) &&
+                    aBooking.getDateTo().equals(dateTo)){
+                return aBooking;
+            }
+        }
+        return null;
+    }
+    
+    public String allBookings() {
+        String allBookings = "";
+        if (getBookings().size() > 0){
+            ArrayList<Booking> copy = 
+                    new ArrayList<Booking>(getBookings());
+            Collections.sort(copy, new BookingDateComparator());
+            for (Booking aBooking: copy){
+                allBookings += aBooking.toString() +"\n";
+            }
+            allBookings += String.format("Vehicle %s has a usage cost of "
+                    + "RM%.2f.\n", getRegistrationNumber(),
+                    usageCost());
+        } else {
+            allBookings = "There are no bookings made for this vehicle.\n";
+        }
+        return allBookings;
     }
     
     public String toString(){

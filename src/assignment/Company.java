@@ -41,25 +41,7 @@ public class Company {
     public boolean remove(Vehicle theVehicle){
         return getVehicles().remove(theVehicle);
     }
-    
-    public String allBookings(Vehicle theVehicle) {
-        String allBookings = "";
-        if (theVehicle.getBookings().size() > 0){
-            ArrayList<Booking> copy = 
-                    new ArrayList<Booking>(theVehicle.getBookings());
-            Collections.sort(copy, new BookingDateComparator());
-            for (Booking aBooking: copy){
-                allBookings += aBooking.toString() +"\n";
-            }
-            allBookings += String.format("Vehicle %s has a usage cost of "
-                    + "%.2f.\n", theVehicle.getRegistrationNumber(),
-                    theVehicle.usageCost());
-        } else {
-            allBookings = "There are no bookings made for this vehicle.\n";
-        }
-        return allBookings;
-    }
-    
+        
     public String allVehicles(){
         String allVehicles = "";
         if (getVehicles().size() > 0){

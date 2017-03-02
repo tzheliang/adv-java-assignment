@@ -5,6 +5,7 @@
  */
 package assignment;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,6 +16,7 @@ public class Booking {
     private String deptName;
     private Date dateFrom;
     private Date dateTo;
+    static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     public Booking(String deptName, Date dateFrom, Date dateTo) {
         setDeptName(deptName);
@@ -64,4 +66,9 @@ public class Booking {
         this.dateTo = dateTo;
     }
     
+    public String toString() {
+        return String.format("Booking made by %s department, starts from"
+                + " %s to %s.", getDeptName(), sdf.format(getDateFrom()), 
+                sdf.format(getDateTo()));
+    }
 }

@@ -112,17 +112,22 @@ public class ResourceBookingConsole {
             System.out.println("Enter the ending date:");
             dateStr = sc.nextLine();
             Date dateTo = sdf.parse(dateStr);
-            if (aVehicle.getBookings().size() > 0){
-                if (!aVehicle.isOverlap(dateFrom, dateTo)){
+            if (dateTo.compareTo(dateFrom) >= 0){
+                if (aVehicle.getBookings().size() > 0){
+                    if (!aVehicle.isOverlap(dateFrom, dateTo)){
+                        aVehicle.add(new Booking(dept, dateFrom, dateTo));
+                        System.out.println("Booking successfully added\n");
+                    } else {
+                        System.out.println("The booking is overlapping with "
+                                + "another booking.\n");
+                    }
+                } else {
                     aVehicle.add(new Booking(dept, dateFrom, dateTo));
                     System.out.println("Booking successfully added\n");
-                } else {
-                    System.out.println("The booking is overlapping with "
-                            + "another booking.\n");
                 }
             } else {
-                aVehicle.add(new Booking(dept, dateFrom, dateTo));
-                System.out.println("Booking successfully added\n");
+                System.out.println("The end date must not be before the "
+                        + "start date");
             }
         } else {
             System.out.println("This vehicle does not exist in the system.\n");
@@ -180,7 +185,16 @@ public class ResourceBookingConsole {
     }
     
     public static void displayBooking() {
-        
+        System.out.println("---Displaying Bookings of Vehicle---");
+        System.out.println("Enter the registration of the vehicle:");
+        String registrationNumber = sc.nextLine().toUpperCase();
+        Vehicle aVehicle = company1.search(registrationNumber);
+        if (aVehicle != null){
+            System.out.println("List of all bookings:");
+            System.out.println(company1.allBookings(aVehicle));
+        } else {
+            System.out.println("This vehicle does not exist in the system.\n");
+        }     
     }
     
     public static void displayVehicle() {

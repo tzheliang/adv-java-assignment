@@ -22,7 +22,7 @@ public class Company {
     
     public Company(String name) {
         setName(name);
-        setVehicles(new ArrayList<Vehicle>());
+        setVehicles(new ArrayList<>());
     }
 
     public Vehicle search(String registrationNumber) {
@@ -56,6 +56,31 @@ public class Company {
             allVehicles = "There are no vehicles stored in the company.\n";
         }
         return allVehicles;
+    }
+    
+    public String getBookingByDept(String dept){
+        String bookingDetails = "";
+        
+        for (Vehicle aVehicle: getVehicles()){
+            if (aVehicle.getBookings().size() > 0){
+                ArrayList<Booking> deptBookingsList = aVehicle.search(dept);
+                if (deptBookingsList.size() > 0){
+                    bookingDetails += String.format("\nBookings for %s "
+                            + "department for %s.\n", dept, 
+                            aVehicle.toString());
+                    for (Booking aBooking: deptBookingsList){
+                        bookingDetails += aBooking.toString() + "\n";
+                    }
+                }
+            }
+        }
+        
+        if (bookingDetails.equals("")){
+            bookingDetails = "No bookings found for " + dept + " department.\n";
+            return bookingDetails;
+        } else {
+            return bookingDetails;
+        }
     }
     /**
      * @return the name

@@ -67,7 +67,7 @@ public class Booking {
     }
     
     public String toString() {
-        return String.format("Booking made by %s department, starts from"
+        return String.format("Booking made by %s department, from"
                 + " %s to %s.", getDeptName(), sdf.format(getDateFrom()), 
                 sdf.format(getDateTo()));
     }

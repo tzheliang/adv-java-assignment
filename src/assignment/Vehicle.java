@@ -27,7 +27,7 @@ public abstract class Vehicle {
         setRegistrationNumber(registationNumber);
         setMake(make);
         setModel(model);
-        setBookings(new ArrayList<Booking>());
+        setBookings(new ArrayList<>());
     }
     
     public abstract double usageCost();
@@ -121,22 +121,45 @@ public abstract class Vehicle {
         return null;
     }
     
+    public ArrayList<Booking> search(String dept){
+        ArrayList<Booking> deptBookings = new ArrayList<>();
+        for(Booking aBooking: getBookings()){
+                if (aBooking.getDeptName().equalsIgnoreCase(dept)){
+                    deptBookings.add(aBooking);
+            }
+        }
+        
+        Collections.sort(deptBookings, new BookingDateComparator());
+        
+        return deptBookings;
+    }
+    
     public String allBookings() {
         String allBookings = "";
+        
+        for (Booking aBooking: getBookings()){
+            allBookings += aBooking.toString() + "\n";
+        }
+        
+        return allBookings;
+    }
+    
+    public String sortedBookings() {
+        String sortedBookings = "";
         if (getBookings().size() > 0){
             ArrayList<Booking> copy = 
                     new ArrayList<Booking>(getBookings());
             Collections.sort(copy, new BookingDateComparator());
             for (Booking aBooking: copy){
-                allBookings += aBooking.toString() +"\n";
+                sortedBookings += aBooking.toString() +"\n";
             }
-            allBookings += String.format("Vehicle %s has a usage cost of "
+            sortedBookings += String.format("Vehicle %s has a usage cost of "
                     + "RM%.2f.\n", getRegistrationNumber(),
                     usageCost());
         } else {
-            allBookings = "There are no bookings made for this vehicle.\n";
+            sortedBookings = "There are no bookings made for this vehicle.\n";
         }
-        return allBookings;
+        return sortedBookings;
     }
     
     public String toString(){

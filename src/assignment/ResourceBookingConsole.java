@@ -18,11 +18,8 @@ public class ResourceBookingConsole {
     static Scanner sc;
     static Company company1;
     static SimpleDateFormat sdf;
-    /**
-     * @param args the command line arguments
-     */
+
     public static void main(String[] args) throws ParseException{
-        // TODO code application logic here
         sc = new Scanner(System.in);
         company1 = new Company("HELP Business Group");
         sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -127,7 +124,7 @@ public class ResourceBookingConsole {
                 }
             } else {
                 System.out.println("The end date must not be before the "
-                        + "start date");
+                        + "start date.\n");
             }
         } else {
             System.out.println("This vehicle does not exist in the system.\n");
@@ -191,7 +188,7 @@ public class ResourceBookingConsole {
         Vehicle aVehicle = company1.search(registrationNumber);
         if (aVehicle != null){
             System.out.println("List of all bookings:");
-            System.out.println(aVehicle.allBookings());
+            System.out.println(aVehicle.sortedBookings());
         } else {
             System.out.println("This vehicle does not exist in the system.\n");
         }     
@@ -200,8 +197,6 @@ public class ResourceBookingConsole {
     public static void displayVehicle() {
         System.out.println("---Displaying all vehicles details---");
         System.out.println(company1.allVehicles());
-        System.out.println("");
-        
     }
     
     public static void deleteBooking() throws ParseException {
@@ -211,6 +206,7 @@ public class ResourceBookingConsole {
         Vehicle aVehicle = company1.search(registrationNumber);
         if (aVehicle != null){
             if (aVehicle.getBookings().size() > 0){
+                System.out.println("\nList of all bookings:");
                 System.out.println(aVehicle.allBookings());
                 System.out.println("Enter the date of the booking to delete");
                 System.out.println("The starting date: ");
@@ -222,9 +218,9 @@ public class ResourceBookingConsole {
                 Booking aBooking = aVehicle.search(dateFrom, dateTo);
                 if (aBooking != null){
                     aVehicle.remove(aBooking);
-                    System.out.println("The booking is deleted.");
+                    System.out.println("The booking is deleted.\n");
                 } else {
-                    System.out.println("This booking does not exist.");
+                    System.out.println("This booking does not exist.\n");
                 }
             } else {
                 System.out.println("This vehicle does not have any "
@@ -235,12 +231,73 @@ public class ResourceBookingConsole {
         }
     }
     
-    public static void updateBooking() {
-        
+    public static void updateBooking() throws ParseException {
+        System.out.println("---Updating Booking---");
+        System.out.println("Enter the registration of the vehicle:");
+        String registrationNumber = sc.nextLine().toUpperCase();
+        Vehicle aVehicle = company1.search(registrationNumber);
+        if (aVehicle != null){
+            if (aVehicle.getBookings().size() > 0){
+                System.out.println("\nList of all bookings:");
+                System.out.println(aVehicle.allBookings());
+                System.out.println("Enter the date of the booking to update");
+                System.out.println("The starting date: ");
+                String dateStr = sc.nextLine();
+                Date dateFrom = sdf.parse(dateStr);
+                System.out.println("The ending date: ");
+                dateStr = sc.nextLine();
+                Date dateTo = sdf.parse(dateStr);
+                Booking aBooking = aVehicle.search(dateFrom, dateTo);
+                if (aBooking != null){
+                    System.out.println("\nUpdating: " + aBooking.toString());
+                    System.out.println("Enter the new department: ");
+                    String dept = sc.nextLine();
+                    System.out.println("Enter the new starting date: ");
+                    dateStr = sc.nextLine();
+                    dateFrom = sdf.parse(dateStr);
+                    System.out.println("Enter the new ending date: ");
+                    dateStr = sc.nextLine();
+                    dateTo = sdf.parse(dateStr);
+                    if (dateTo.compareTo(dateFrom) >= 0){
+                        if (aVehicle.getBookings().size() > 1){
+                            if (!aVehicle.isOverlap(dateFrom, dateTo)){
+                                aBooking.setDeptName(dept);
+                                aBooking.setDateFrom(dateFrom);
+                                aBooking.setDateTo(dateTo);
+                                System.out.println("The booking is successfully"
+                                        + " updated.\n");
+                            } else {
+                                System.out.println("The dates are overlapping"
+                                        + " with an existing booking.\n");
+                            }
+                        } else {
+                            aBooking.setDeptName(dept);
+                            aBooking.setDateFrom(dateFrom);
+                            aBooking.setDateTo(dateTo);
+                            System.out.println("The booking is successfully "
+                                    + "updated.\n");
+                        }
+                    } else {
+                        System.out.println("The end date must not be before the"
+                                + " start date.\n");
+                    }
+                } else {
+                    System.out.println("This booking does not exist.\n");
+                }
+            } else {
+                System.out.println("This vehicle does not have any "
+                        + "bookings made.\n");
+            }
+        } else {
+            System.out.println("This vehicle does not exist in the system.\n");
+        }
     }
     
     public static void displayDeptBooking() {
-        
+        System.out.println("---Displaying Booking by Department---");
+        System.out.println("Enter the department name:");
+        String dept = sc.nextLine();
+        System.out.println(company1.getBookingByDept(dept));
     }
     
     public static int menu() {

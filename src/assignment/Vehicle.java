@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 04/03/2017
  */
+
 package assignment;
 
 import java.util.ArrayList;
@@ -10,7 +11,9 @@ import java.util.Collections;
 import java.util.Date;
 
 /**
- *
+ * This is the vehicle class which defines the vehicles in the company.
+ * This class is abstract and cannot be instantiated, with 2 subclasses
+ * car and van
  * @author Zheliang
  */
 public abstract class Vehicle {
@@ -18,7 +21,9 @@ public abstract class Vehicle {
     private String make;
     private String model;
     private ArrayList<Booking> bookings;
-    
+    /**
+     * No argument constructor for vehicle class to set default values Not Set
+     */
     public Vehicle() {
         this("Not Set", "Not Set", "Not Set");
     }

@@ -1,8 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 04/03/2017
  */
+
 package assignment;
 
 import java.text.ParseException;
@@ -11,19 +12,33 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- *
+ * The console class which handles the IO of the program
  * @author Zheliang
  */
 public class ResourceBookingConsole {
+    /**
+     * The static scanner object which allows to accept input
+     */
     static Scanner sc;
+    /**
+     * The static company object which will be the main company
+     */
     static Company company1;
+    /**
+     * The static date format object which formats the date into dd-MM-yyyy
+     * format
+     */
     static SimpleDateFormat sdf;
-
+    /**
+     * Main method of the console class, performs the operation of the program
+     * @param args
+     * @throws ParseException 
+     */
     public static void main(String[] args) throws ParseException{
         sc = new Scanner(System.in);
         company1 = new Company("HELP Business Group");
         sdf = new SimpleDateFormat("dd/MM/yyyy");
-        
+       
         int select;
         do {
             select = menu();
@@ -63,7 +78,9 @@ public class ResourceBookingConsole {
         } while (select != 0);
         System.out.println("Exit");
     }
-    
+    /**
+     * Method to perform the add vehicle operation
+     */
     public static void addVehicle() {
         System.out.println("---Adding Vehicle---");
         System.out.println("Enter the registration number:");
@@ -74,6 +91,7 @@ public class ResourceBookingConsole {
         String model = sc.nextLine();
         System.out.println("Would you like to add a <C>ar or <V>an?");
         String type = sc.nextLine();
+        // Creates subclass of vehicle based on choice
         if (company1.search(registrationNumber) == null){
             if (type.equalsIgnoreCase("C")){
                 company1.add(new Car(registrationNumber, make, model));
@@ -92,7 +110,10 @@ public class ResourceBookingConsole {
                     registrationNumber + " already exists in the system.\n");
         }
     }
-    
+    /**
+     * Method to create a booking for a vehicle
+     * @throws ParseException throws parse exception for the date
+     */
     public static void createBooking() throws ParseException {
         System.out.println("---Creating Booking---");
         System.out.println("Enter the registration number of the vehicle:");
@@ -109,8 +130,11 @@ public class ResourceBookingConsole {
             System.out.println("Enter the ending date:");
             dateStr = sc.nextLine();
             Date dateTo = sdf.parse(dateStr);
+            // The end date must be equal or after the start date
             if (dateTo.compareTo(dateFrom) >= 0){
+                // Check if there are existing bookings
                 if (aVehicle.getBookings().size() > 0){
+                    // Checks if the dates of the bookings are overlapped
                     if (!aVehicle.isOverlap(dateFrom, dateTo)){
                         aVehicle.add(new Booking(dept, dateFrom, dateTo));
                         System.out.println("Booking successfully added\n");
@@ -130,13 +154,16 @@ public class ResourceBookingConsole {
             System.out.println("This vehicle does not exist in the system.\n");
         }
     }
-    
+    /**
+     * Method to perform delete vehicle operation
+     */
     public static void deleteVehicle() {
         System.out.println("---Deleting vehicle---");
         System.out.println("Enter the registration of the vehicle:");
         String registrationNumber = sc.nextLine().toUpperCase();
         Vehicle aVehicle = company1.search(registrationNumber);
         if (aVehicle != null){
+            // Checks if there are exisitng bookings before deleting
             if (aVehicle.getBookings().size() > 0){
                 System.out.println("There are " + aVehicle.getBookings().size()
                         + " bookings made for this vehicle, "
@@ -159,7 +186,9 @@ public class ResourceBookingConsole {
             System.out.println("This vehicle does not exist in the system.\n");
         }        
     }
-    
+    /**
+     * Method to perform update vehicle operation
+     */
     public static void updateVehicle() {
         System.out.println("---Updating vehicle---");
         System.out.println("Enter the registration of the vehicle:");
@@ -180,7 +209,9 @@ public class ResourceBookingConsole {
             System.out.println("This vehicle does not exist in the system.\n");
         }
     }
-    
+    /**
+     * Method to perform display bookings for a vehicle operation
+     */
     public static void displayBooking() {
         System.out.println("---Displaying Bookings of Vehicle---");
         System.out.println("Enter the registration of the vehicle:");
@@ -193,12 +224,17 @@ public class ResourceBookingConsole {
             System.out.println("This vehicle does not exist in the system.\n");
         }     
     }
-    
+    /**
+     * Method to perform display vehicles in the company without booking details
+     */
     public static void displayVehicle() {
         System.out.println("---Displaying all vehicles details---");
         System.out.println(company1.allVehicles());
     }
-    
+    /**
+     * Method to perform delete a booking operation
+     * @throws ParseException throws the exception for the date
+     */
     public static void deleteBooking() throws ParseException {
         System.out.println("---Deleting Booking---");
         System.out.println("Enter the registration of the vehicle:");
@@ -230,7 +266,10 @@ public class ResourceBookingConsole {
             System.out.println("This vehicle does not exist in the system.\n");
         }
     }
-    
+    /**
+     * Method to perform update booking operation
+     * @throws ParseException throws the exception for the date
+     */
     public static void updateBooking() throws ParseException {
         System.out.println("---Updating Booking---");
         System.out.println("Enter the registration of the vehicle:");
@@ -292,14 +331,19 @@ public class ResourceBookingConsole {
             System.out.println("This vehicle does not exist in the system.\n");
         }
     }
-    
+    /**
+     * Method to perform display booking department operation
+     */
     public static void displayDeptBooking() {
         System.out.println("---Displaying Booking by Department---");
         System.out.println("Enter the department name:");
         String dept = sc.nextLine();
         System.out.println(company1.getBookingByDept(dept));
     }
-    
+    /**
+     * Method to call the menu to select operation
+     * @return Integer which corresponds to the menu option
+     */
     public static int menu() {
         System.out.println("Vehicle booking system for " + company1.getName());
         System.out.println("");

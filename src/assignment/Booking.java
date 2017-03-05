@@ -3,14 +3,11 @@
  * STUDENT ID: B1400653
  * DATE: 04/03/2017
  */
-
 package assignment;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 /**
- *This is a booking class which defines the booking object.
+ * This is a booking class which defines the booking object.
  * A vehicle object will have a collection of booking objects.
  * 
  * @author Zheliang
@@ -46,7 +43,6 @@ public class Booking {
         setDateFrom(dateFrom);
         setDateTo(dateTo);
     }
-
     /**
      * Method to return the department name
      * @return the deptName
@@ -54,7 +50,6 @@ public class Booking {
     public String getDeptName() {
         return deptName;
     }
-
     /**
      * Method to set the department name from deptName
      * @param deptName the name of the department
@@ -62,7 +57,6 @@ public class Booking {
     public void setDeptName(String deptName) {
         this.deptName = deptName;
     }
-
     /**
      * Method to return the start date of booking
      * @return the dateFrom
@@ -70,7 +64,6 @@ public class Booking {
     public Date getDateFrom() {
         return dateFrom;
     }
-
     /**
      * Method to set the start date from dateFrom
      * @param dateFrom the dateFrom to set
@@ -78,7 +71,6 @@ public class Booking {
     public void setDateFrom(Date dateFrom) {
         this.dateFrom = dateFrom;
     }
-
     /**
      * Method to return the end date of booking
      * @return the dateTo
@@ -86,7 +78,6 @@ public class Booking {
     public Date getDateTo() {
         return dateTo;
     }
-
     /**
      * Method to set the end date from dateTo
      * @param dateTo the dateTo to set

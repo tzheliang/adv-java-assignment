@@ -3,9 +3,7 @@
  * STUDENT ID: B1400653
  * DATE: 04/03/2017
  */
-
 package assignment;
-
 /**
  * Van class which is inherited from the vehicle class
  * Van can have a collection of bookings

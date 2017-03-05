@@ -3,12 +3,8 @@
  * STUDENT ID: B1400653
  * DATE: 04/03/2017
  */
-
 package assignment;
-
 import java.util.ArrayList;
-import java.util.Collections;
-
 /**
  * A company object which is the main object of this system
  * The company will have a collection of vehicles for booking

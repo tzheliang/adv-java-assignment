@@ -3,14 +3,11 @@
  * STUDENT ID: B1400653
  * DATE: 04/03/2017
  */
-
 package assignment;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
-
 /**
  * The console class which handles the IO of the program
  * @author Zheliang
@@ -364,5 +361,4 @@ public class ResourceBookingConsole {
         System.out.println("");
         return select;
     }
-    
 }

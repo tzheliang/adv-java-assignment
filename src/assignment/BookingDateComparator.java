@@ -3,11 +3,8 @@
  * STUDENT ID: B1400653
  * DATE: 04/03/2017
  */
-
 package assignment;
-
 import java.util.Comparator;
-
 /**
  *A comparator class to perform comparisons between 2 booking objects
  * @author Zheliang
@@ -41,7 +38,6 @@ public class BookingDateComparator implements Comparator<Booking> {
         } else {
             result = 0;
         }
-        
         return result;
     }
 }

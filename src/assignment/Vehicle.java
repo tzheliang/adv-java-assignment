@@ -3,13 +3,10 @@
  * STUDENT ID: B1400653
  * DATE: 04/03/2017
  */
-
 package assignment;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-
 /**
  * This is the vehicle class which defines the vehicles in the company.
  * This class is abstract and cannot be instantiated, with 2 subclasses
@@ -46,7 +43,6 @@ public abstract class Vehicle {
      * @return returns nothing as it is abstract
      */
     public abstract double usageCost();
-
     /**
      * Method to return the registration number of vehicle
      * @return the registrationNumber
@@ -54,7 +50,6 @@ public abstract class Vehicle {
     public String getRegistrationNumber() {
         return registrationNumber;
     }
-
     /**
      * Method to set the registration number of vehicle
      * @param registrationNumber the registrationNumber to set
@@ -62,7 +57,6 @@ public abstract class Vehicle {
     public void setRegistrationNumber(String registrationNumber) {
         this.registrationNumber = registrationNumber;
     }
-
     /**
      * Method to return the make of the vehicle
      * @return the make of the vehicle
@@ -70,7 +64,6 @@ public abstract class Vehicle {
     public String getMake() {
         return make;
     }
-
     /**
      * Method to set the make of the vehicle
      * @param make the make to set
@@ -78,7 +71,6 @@ public abstract class Vehicle {
     public void setMake(String make) {
         this.make = make;
     }
-
     /**
      * Method to return the model of the vehicle
      * @return the model
@@ -86,7 +78,6 @@ public abstract class Vehicle {
     public String getModel() {
         return model;
     }
-
     /**
      * Method to set the model of the vehicle 
      * @param model the model to set
@@ -94,7 +85,6 @@ public abstract class Vehicle {
     public void setModel(String model) {
         this.model = model;
     }
-
     /**
      * Method to return the collection of the bookings
      * @return the bookings
@@ -102,7 +92,6 @@ public abstract class Vehicle {
     public ArrayList<Booking> getBookings() {
         return bookings;
     }
-
     /**
      * Method to set the collection of the bookings
      * @param bookings the bookings to set

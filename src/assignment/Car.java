@@ -3,9 +3,7 @@
  * STUDENT ID: B1400653
  * DATE: 04/03/2017
  */
-
 package assignment;
-
 /**
  * Car class which is inherited from the vehicle class
  * Car can have a collection of bookings
@@ -29,7 +27,6 @@ public class Car extends Vehicle {
     public Car(String registrationNumber, String make, String model) {
         super(registrationNumber, make, model);
     }
-    
     /**
      * To string method to display the object instance in output
      * @return String with car information

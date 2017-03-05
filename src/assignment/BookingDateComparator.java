@@ -6,7 +6,7 @@
 package assignment;
 import java.util.Comparator;
 /**
- *A comparator class to perform comparisons between 2 booking objects
+ * A comparator class to perform comparisons between 2 booking objects
  * @author Zheliang
  */
 public class BookingDateComparator implements Comparator<Booking> {

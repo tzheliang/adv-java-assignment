@@ -41,8 +41,6 @@ public class Van extends Vehicle{
      * Calculates the usage cost of the van based on the number of days of 
      * the booking.
      * @return The total cost of the booking made for the van object
-     *
-     * @return 
      */
     /*
      * Loops through every booking object in the van to calculate total usage 

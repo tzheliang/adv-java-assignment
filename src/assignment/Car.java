@@ -11,8 +11,8 @@ package assignment;
  */
 public class Car extends Vehicle {
     /**
-     * A no argument constructor which creates a car object with default values.
-     * The values are Not Set for all fields
+     * A no argument constructor which creates a car object with 
+     * default values. The values are Not Set for all fields
      */
     public Car() {
         super();
@@ -32,7 +32,7 @@ public class Car extends Vehicle {
      * @return String with car information
      */
     public String toString() {
-        return "Car with registation number: " + super.toString();
+        return "Car with registration number: " + super.toString();
     }
     /**
      * Calculates the usage cost of the car based on the number of days of 

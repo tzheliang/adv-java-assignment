@@ -19,14 +19,15 @@ public abstract class Vehicle {
     private String model;
     private ArrayList<Booking> bookings;
     /**
-     * No argument constructor for vehicle class to set default values Not Set
+     * No argument constructor for vehicle class to set default 
+     * values Not Set
      */
     public Vehicle() {
         this("Not Set", "Not Set", "Not Set");
     }
     /**
-     * Three argument constructor for vehicle class to construct vehicle object
-     * with three values
+     * Three argument constructor for vehicle class to construct 
+     * vehicle object with three values
      * @param registationNumber the registration number of vehicle
      * @param make the make of the vehicle
      * @param model the model of the vehicle
@@ -38,8 +39,8 @@ public abstract class Vehicle {
         setBookings(new ArrayList<>());
     }
     /**
-     * Abstract method of the usage cost for the car and van class to implement
-     * their own version of the usage cost
+     * Abstract method of the usage cost for the car and van class 
+     * to implement their own version of the usage cost
      * @return returns nothing as it is abstract
      */
     public abstract double usageCost();
@@ -109,7 +110,7 @@ public abstract class Vehicle {
         // Default initialization set to true
         boolean overlap = true;
         for (Booking aBooking: getBookings()){
-            // Checks if the two dates are not within the range of two dates
+            // Checks if the two dates are not within the range of dates
             if (dateFrom.before(aBooking.getDateFrom()) && 
                     dateTo.before(aBooking.getDateFrom()) ||
                     dateFrom.after(aBooking.getDateTo()) && 
@@ -117,7 +118,7 @@ public abstract class Vehicle {
                 // Changes to false if it is available
                 overlap = false;
             } else {
-                // Immediately return true if the dates are within the range
+                // Immediately return true if the dates are in the range
                 return true;
             }
         }
@@ -140,8 +141,8 @@ public abstract class Vehicle {
         return getBookings().remove(theBooking);
     }
     /**
-     * Method to search the collection of bookings in the vehicle according to
-     * the dates given
+     * Method to search the collection of bookings in the vehicle according
+     * to the dates given
      * @param dateFrom the start date of the booking
      * @param dateTo the end date of the booking
      * @return the booking object if found, null if not found
@@ -156,11 +157,11 @@ public abstract class Vehicle {
         return null;
     }
     /**
-     * Method to search collection of bookings given the department name of 
-     * the booking
+     * Method to search collection of bookings given the department 
+     * name of the booking
      * @param dept the department name
-     * @return an ArrayList of bookings containing the bookings with the same 
-     * department name sorted according to date
+     * @return an ArrayList of bookings containing the bookings with 
+     * the same department name sorted according to date
      */
     public ArrayList<Booking> search(String dept){
         ArrayList<Booking> deptBookings = new ArrayList<>();
@@ -188,10 +189,10 @@ public abstract class Vehicle {
         return allBookings;
     }
     /**
-     * Method to return all the bookings in the list sorted by date with total 
-     * cost
-     * @return a string containing all the booking objects information sorted
-     *  by date with grand total cost
+     * Method to return all the bookings in the list sorted by date 
+     * with total cost
+     * @return a string containing all the booking objects information 
+     * sorted by date with grand total cost
      */
     public String sortedBookings() {
         String sortedBookings = "";
@@ -202,21 +203,22 @@ public abstract class Vehicle {
             for (Booking aBooking: copy){
                 sortedBookings += aBooking.toString() +"\n";
             }
-            sortedBookings += String.format("Vehicle %s has a usage cost of "
-                    + "RM%.2f.\n", getRegistrationNumber(),
+            sortedBookings += String.format("Vehicle %s has a usage cost"
+                    + " of RM%.2f.\n", getRegistrationNumber(),
                     usageCost());
         } else {
-            sortedBookings = "There are no bookings made for this vehicle.\n";
+            sortedBookings = "There are no bookings made for this "
+                    + "vehicle.\n";
         }
         return sortedBookings;
     }
     /**
      * Method to return a string with information of the vehicle class
-     * @return a string with information of the vehicle class which details
-     * the registration number, make and model of the vehicle
+     * @return a string with information of the vehicle class which 
+     * details the registration number, make and model of the vehicle
      */
     public String toString(){
         return getRegistrationNumber() +", Make: " + getMake() + 
-                ", Model: "  + getModel();
+                ", Model: " + getModel();
     }
 }

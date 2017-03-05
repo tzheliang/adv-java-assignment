@@ -22,12 +22,13 @@ public class ResourceBookingConsole {
      */
     static Company company1;
     /**
-     * The static date format object which formats the date into dd-MM-yyyy
-     * format
+     * The static date format object which formats the date into 
+     * dd-MM-yyyy format
      */
     static SimpleDateFormat sdf;
     /**
-     * Main method of the console class, performs the operation of the program
+     * Main method of the console class, performs the operation 
+     * of the program
      * @param args
      * @throws ParseException 
      */
@@ -92,11 +93,13 @@ public class ResourceBookingConsole {
         if (company1.search(registrationNumber) == null){
             if (type.equalsIgnoreCase("C")){
                 company1.add(new Car(registrationNumber, make, model));
-                System.out.println("Vehicle successfully added into system.\n");
+                System.out.println("Vehicle successfully "
+                        + "added into system.\n");
             }
             else if (type.equalsIgnoreCase("V")){
                 company1.add(new Van(registrationNumber, make, model));
-                System.out.println("Vehicle successfully added into system.\n");
+                System.out.println("Vehicle successfully "
+                        + "added into system.\n");
             }
             else {
                 System.out.println("Type <C> for Car, <V> for Van");
@@ -104,7 +107,8 @@ public class ResourceBookingConsole {
             }
         } else {
             System.out.println("Vehicle with registration number " +
-                    registrationNumber + " already exists in the system.\n");
+                    registrationNumber + " already exists in "
+                            + "the system.\n");
         }
     }
     /**
@@ -113,7 +117,8 @@ public class ResourceBookingConsole {
      */
     public static void createBooking() throws ParseException {
         System.out.println("---Creating Booking---");
-        System.out.println("Enter the registration number of the vehicle:");
+        System.out.println("Enter the registration number of the "
+                + "vehicle:");
         String registrationNumber = sc.nextLine().toUpperCase();
         Vehicle aVehicle = company1.search(registrationNumber);
         if (aVehicle != null){
@@ -131,13 +136,16 @@ public class ResourceBookingConsole {
             if (dateTo.compareTo(dateFrom) >= 0){
                 // Check if there are existing bookings
                 if (aVehicle.getBookings().size() > 0){
-                    // Checks if the dates of the bookings are overlapped
+                    /* 
+                     * Checks if the dates of the bookings are 
+                     * overlapped
+                     */
                     if (!aVehicle.isOverlap(dateFrom, dateTo)){
                         aVehicle.add(new Booking(dept, dateFrom, dateTo));
                         System.out.println("Booking successfully added\n");
                     } else {
-                        System.out.println("The booking is overlapping with "
-                                + "another booking.\n");
+                        System.out.println("The booking is overlapping "
+                                + "with another booking.\n");
                     }
                 } else {
                     aVehicle.add(new Booking(dept, dateFrom, dateTo));
@@ -148,7 +156,8 @@ public class ResourceBookingConsole {
                         + "start date.\n");
             }
         } else {
-            System.out.println("This vehicle does not exist in the system.\n");
+            System.out.println("This vehicle does not exist in "
+                    + "the system.\n");
         }
     }
     /**
@@ -162,7 +171,8 @@ public class ResourceBookingConsole {
         if (aVehicle != null){
             // Checks if there are exisitng bookings before deleting
             if (aVehicle.getBookings().size() > 0){
-                System.out.println("There are " + aVehicle.getBookings().size()
+                System.out.println("There are " + 
+                        aVehicle.getBookings().size()
                         + " bookings made for this vehicle, "
                         + "would you still like to delete? Y/N:");
                 String decision = sc.nextLine();
@@ -180,7 +190,8 @@ public class ResourceBookingConsole {
                 System.out.println("Vehicle is deleted.\n");
             }
         } else {
-            System.out.println("This vehicle does not exist in the system.\n");
+            System.out.println("This vehicle does not exist in "
+                    + "the system.\n");
         }        
     }
     /**
@@ -203,7 +214,8 @@ public class ResourceBookingConsole {
             aVehicle.setModel(newModel);
             System.out.println("Vehicle details updated successfully.\n");
         } else{
-            System.out.println("This vehicle does not exist in the system.\n");
+            System.out.println("This vehicle does not exist in "
+                    + "the system.\n");
         }
     }
     /**
@@ -218,11 +230,13 @@ public class ResourceBookingConsole {
             System.out.println("List of all bookings:");
             System.out.println(aVehicle.sortedBookings());
         } else {
-            System.out.println("This vehicle does not exist in the system.\n");
+            System.out.println("This vehicle does not exist in "
+                    + "the system.\n");
         }     
     }
     /**
-     * Method to perform display vehicles in the company without booking details
+     * Method to perform display vehicles in the company 
+     * without booking details
      */
     public static void displayVehicle() {
         System.out.println("---Displaying all vehicles details---");
@@ -241,7 +255,8 @@ public class ResourceBookingConsole {
             if (aVehicle.getBookings().size() > 0){
                 System.out.println("\nList of all bookings:");
                 System.out.println(aVehicle.allBookings());
-                System.out.println("Enter the date of the booking to delete");
+                System.out.println("Enter the date of the booking "
+                        + "to delete");
                 System.out.println("The starting date: ");
                 String dateStr = sc.nextLine();
                 Date dateFrom = sdf.parse(dateStr);
@@ -260,7 +275,8 @@ public class ResourceBookingConsole {
                         + "bookings made.\n");
             }
         } else {
-            System.out.println("This vehicle does not exist in the system.\n");
+            System.out.println("This vehicle does not exist in "
+                    + "the system.\n");
         }
     }
     /**
@@ -276,7 +292,8 @@ public class ResourceBookingConsole {
             if (aVehicle.getBookings().size() > 0){
                 System.out.println("\nList of all bookings:");
                 System.out.println(aVehicle.allBookings());
-                System.out.println("Enter the date of the booking to update");
+                System.out.println("Enter the date of the booking "
+                        + "to update");
                 System.out.println("The starting date: ");
                 String dateStr = sc.nextLine();
                 Date dateFrom = sdf.parse(dateStr);
@@ -285,7 +302,8 @@ public class ResourceBookingConsole {
                 Date dateTo = sdf.parse(dateStr);
                 Booking aBooking = aVehicle.search(dateFrom, dateTo);
                 if (aBooking != null){
-                    System.out.println("\nUpdating: " + aBooking.toString());
+                    System.out.println("\nUpdating: " + 
+                            aBooking.toString());
                     System.out.println("Enter the new department: ");
                     String dept = sc.nextLine();
                     System.out.println("Enter the new starting date: ");
@@ -300,22 +318,23 @@ public class ResourceBookingConsole {
                                 aBooking.setDeptName(dept);
                                 aBooking.setDateFrom(dateFrom);
                                 aBooking.setDateTo(dateTo);
-                                System.out.println("The booking is successfully"
-                                        + " updated.\n");
+                                System.out.println("The booking is "
+                                        + "successfully updated.\n");
                             } else {
-                                System.out.println("The dates are overlapping"
-                                        + " with an existing booking.\n");
+                                System.out.println("The dates are "
+                                        + "overlapping with an "
+                                        + "existing booking.\n");
                             }
                         } else {
                             aBooking.setDeptName(dept);
                             aBooking.setDateFrom(dateFrom);
                             aBooking.setDateTo(dateTo);
-                            System.out.println("The booking is successfully "
-                                    + "updated.\n");
+                            System.out.println("The booking is "
+                                    + "successfully updated.\n");
                         }
                     } else {
-                        System.out.println("The end date must not be before the"
-                                + " start date.\n");
+                        System.out.println("The end date must not be "
+                                + "before the start date.\n");
                     }
                 } else {
                     System.out.println("This booking does not exist.\n");
@@ -325,7 +344,8 @@ public class ResourceBookingConsole {
                         + "bookings made.\n");
             }
         } else {
-            System.out.println("This vehicle does not exist in the system.\n");
+            System.out.println("This vehicle does not exist in "
+                    + "the system.\n");
         }
     }
     /**
@@ -342,7 +362,8 @@ public class ResourceBookingConsole {
      * @return Integer which corresponds to the menu option
      */
     public static int menu() {
-        System.out.println("Vehicle booking system for " + company1.getName());
+        System.out.println("Vehicle booking system for " + 
+                company1.getName());
         System.out.println("");
         System.out.println("1. Add a vehicle");
         System.out.println("2. Create a booking");
@@ -355,7 +376,7 @@ public class ResourceBookingConsole {
         System.out.println("9. Display booking made by department");
         System.out.println("0. Exit");
         System.out.println("");
-        System.out.print("Which option would you like to peform?: ");
+        System.out.print("Which option would you like to perform?: ");
         int select = sc.nextInt();
         sc.nextLine();
         System.out.println("");

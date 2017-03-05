@@ -36,8 +36,8 @@ public class Company {
         setVehicles(new ArrayList<>());
     }
     /**
-     * Method to search collection of vehicles to retrieve the vehicle object
-     * based on the registration number
+     * Method to search collection of vehicles to retrieve 
+     * the vehicle object based on the registration number
      * @param registrationNumber    the registration number of vehicle
      * @return the vehicle object which matches the registration number,
      * returns null if not found
@@ -67,20 +67,23 @@ public class Company {
         return getVehicles().remove(theVehicle);
     }
     /**
-     * Method to retrieve all the vehicles in the collection, with the bookings
-     * information of how many bookings with the total usage cost
+     * Method to retrieve all the vehicles in the collection, 
+     * with the bookings information of how many bookings 
+     * with the total usage cost
      * @return The string of the vehicle with booking information
      */
     public String allVehicles(){
         String allVehicles = "";
+        double totalCost = 0;
         if (getVehicles().size() > 0){
             for (Vehicle aVehicle: getVehicles()){
-                double totalCost = 0;
                 totalCost += aVehicle.usageCost();
-                allVehicles += String.format("%s with %d bookings with grand "
-                        + "total cost of RM%.2f.\n", aVehicle.toString(), 
-                        aVehicle.getBookings().size(), totalCost);
+                allVehicles += String.format("%s with %d bookings.\n", 
+                        aVehicle.toString(), 
+                        aVehicle.getBookings().size());
             }
+            allVehicles += String.format("The grand total cost of"
+                    + "all vehicles is RM%.2f.\n", totalCost);
         } else {
             allVehicles = "There are no vehicles stored in the company.\n";
         }
@@ -98,7 +101,8 @@ public class Company {
         for (Vehicle aVehicle: getVehicles()){
             if (aVehicle.getBookings().size() > 0){
                 //Retrieves a sorted list of bookings
-                ArrayList<Booking> deptBookingsList = aVehicle.search(dept);
+                ArrayList<Booking> deptBookingsList 
+                        = aVehicle.search(dept);
                 if (deptBookingsList.size() > 0){
                     bookingDetails += String.format("\nBookings for %s "
                             + "department for %s.\n", dept, 
@@ -109,9 +113,13 @@ public class Company {
                 }
             }
         }
-        // Returns a statement if no bookings made by the department is found.
+        /* 
+         * Returns a statement if no bookings made by the 
+         * department is found. 
+         */
         if (bookingDetails.equals("")){
-            bookingDetails = "No bookings found for " + dept + " department.\n";
+            bookingDetails = 
+                    "No bookings found for " + dept + " department.\n";
             return bookingDetails;
         } else {
             return bookingDetails;
@@ -124,7 +132,6 @@ public class Company {
     public String getName() {
         return name;
     }
-
     /**
      * Method to set the name of the company
      * @param name the name to set
@@ -132,7 +139,6 @@ public class Company {
     public void setName(String name) {
         this.name = name;
     }
-
     /**
      * Method to return the list of vehicles of the company
      * @return the vehicles
@@ -140,7 +146,6 @@ public class Company {
     public ArrayList<Vehicle> getVehicles() {
         return vehicles;
     }
-
     /**
      * Method to set the collection of vehicles
      * @param vehicles the vehicles to set

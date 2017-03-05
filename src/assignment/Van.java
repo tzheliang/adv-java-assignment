@@ -11,8 +11,8 @@ package assignment;
  */
 public class Van extends Vehicle{
     /**
-     * A no argument constructor which creates a van object with default values.
-     * The values are Not Set for all fields
+     * A no argument constructor which creates a van object with 
+     * default values. The values are Not Set for all fields
      */
     public Van() {
         super();
@@ -35,14 +35,13 @@ public class Van extends Vehicle{
         return "Van with registration number: " + super.toString();
     }
     /**
-     *     /**
-     * Calculates the usage cost of the van based on the number of days of 
-     * the booking.
+     * Calculates the usage cost of the van based on the number of days 
+     * of the booking.
      * @return The total cost of the booking made for the van object
      */
     /*
-     * Loops through every booking object in the van to calculate total usage 
-     * cost
+     * Loops through every booking object in the van to calculate 
+     * total usage cost
      */
     public double usageCost() {
         double totalCost = 0;

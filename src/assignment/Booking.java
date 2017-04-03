@@ -94,4 +94,13 @@ public class Booking {
                 + " %s to %s.", getDeptName(), sdf.format(getDateFrom()), 
                 sdf.format(getDateTo()));
     }
+    /**
+     * Method to retrieve the number of days a booking
+     * @return number of days of booking
+     */
+    public int getNumberOfDays() {
+        long diff = (getDateTo().getTime() - getDateFrom().getTime());
+        int noOfDays = (int) ((diff / (1000 * 60 * 60 * 24)) + 1);
+        return noOfDays;
+    }
 }

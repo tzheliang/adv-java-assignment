@@ -19,6 +19,10 @@ public class BookingModel extends AbstractTableModel {
         setBookings(bookings);
     }
     
+    public BookingModel() {
+        setBookings(new ArrayList<>());
+    }
+    
     public int getRowCount() {
         return getBookings().size();
     }

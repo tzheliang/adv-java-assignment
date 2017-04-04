@@ -22,6 +22,9 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         company1 = new Company("HELP Business Group");
         vehicleModel = new VehicleModel(company1.getVehicles());
         bookingModel = new BookingModel();
+        avd = new AddVehicleDialog(this, true);
+        uvd = new UpdateVehicleDialog(this, true);
+        
         vehicleTable.setModel(vehicleModel);
         bookingTable.setModel(bookingModel);
         
@@ -61,10 +64,10 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         activeVehicleLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        openMI = new javax.swing.JMenuItem();
-        saveMI = new javax.swing.JMenuItem();
+        openMenuItem = new javax.swing.JMenuItem();
+        saveMenuItem = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        closeMI = new javax.swing.JMenuItem();
+        closeMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -88,10 +91,25 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         jLabel1.setText("List of Cars");
 
         addVehicleButton.setText("Add Vehicle");
+        addVehicleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addVehicleButtonActionPerformed(evt);
+            }
+        });
 
         deleteVehicleButton.setText("Delete Vehicle");
+        deleteVehicleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteVehicleButtonActionPerformed(evt);
+            }
+        });
 
         updateVehicleButton.setText("Update Vehicle");
+        updateVehicleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateVehicleButtonActionPerformed(evt);
+            }
+        });
 
         displayVehicleInfoButton.setText("Display Vehicle Information");
 
@@ -124,23 +142,23 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
 
         jMenu1.setText("File");
 
-        openMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        openMI.setText("Open");
-        jMenu1.add(openMI);
+        openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        openMenuItem.setText("Open");
+        jMenu1.add(openMenuItem);
 
-        saveMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        saveMI.setText("Save");
-        jMenu1.add(saveMI);
+        saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
+        saveMenuItem.setText("Save");
+        jMenu1.add(saveMenuItem);
         jMenu1.add(jSeparator1);
 
-        closeMI.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
-        closeMI.setText("Exit");
-        closeMI.addActionListener(new java.awt.event.ActionListener() {
+        closeMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        closeMenuItem.setText("Exit");
+        closeMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                closeMIActionPerformed(evt);
+                closeMenuItemActionPerformed(evt);
             }
         });
-        jMenu1.add(closeMI);
+        jMenu1.add(closeMenuItem);
 
         jMenuBar1.add(jMenu1);
 
@@ -234,7 +252,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void closeMIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMIActionPerformed
+    private void closeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
         // TODO add your handling code here:
         int result = JOptionPane.showConfirmDialog(this, "Really Close?");
         if (result == JOptionPane.OK_OPTION){
@@ -242,7 +260,40 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         } else if (result == JOptionPane.NO_OPTION){
             JOptionPane.showMessageDialog(this, "Aborted");
         } 
-    }//GEN-LAST:event_closeMIActionPerformed
+    }//GEN-LAST:event_closeMenuItemActionPerformed
+
+    private void addVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehicleButtonActionPerformed
+        avd.setLocationRelativeTo(this);
+        avd.setVisible(true);
+        Vehicle v1 = avd.getV1();
+        
+        if (v1 == null) {
+            JOptionPane.showMessageDialog(this, "No vehicle was added");
+        } else {
+            vehicleModel.addVehicle(v1);
+        }
+    }//GEN-LAST:event_addVehicleButtonActionPerformed
+
+    private void deleteVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteVehicleButtonActionPerformed
+        int v = vehicleTable.getSelectedRow();
+        if (v == -1) {
+            JOptionPane.showMessageDialog(this, "No vehicle was selected.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            vehicleModel.removeVehicle(v);
+        }
+    }//GEN-LAST:event_deleteVehicleButtonActionPerformed
+
+    private void updateVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateVehicleButtonActionPerformed
+        int v = vehicleTable.getSelectedRow();
+        if (v == -1) {
+            JOptionPane.showMessageDialog(this, "No vehicle was selected.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            uvd.setLocationRelativeTo(null);
+            uvd.setVisible(true);
+        }
+    }//GEN-LAST:event_updateVehicleButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,12 +334,14 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     private Company company1;
     private VehicleModel vehicleModel;
     private BookingModel bookingModel;
+    private AddVehicleDialog avd;
+    private UpdateVehicleDialog uvd;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel activeVehicleLabel;
     private javax.swing.JButton addVehicleButton;
     private javax.swing.JTable bookingTable;
-    private javax.swing.JMenuItem closeMI;
+    private javax.swing.JMenuItem closeMenuItem;
     private javax.swing.JLabel companyNameLabel;
     private javax.swing.JButton createBookingButton;
     private javax.swing.JButton deleteBookingButton;
@@ -304,8 +357,8 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel nameLabel;
-    private javax.swing.JMenuItem openMI;
-    private javax.swing.JMenuItem saveMI;
+    private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JButton updateBookingButton;
     private javax.swing.JButton updateVehicleButton;
     private javax.swing.JTable vehicleTable;

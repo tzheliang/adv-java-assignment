@@ -36,7 +36,7 @@ public class VehicleModel extends AbstractTableModel {
                 if (v1 instanceof Car) {
                     return "Car";
                 } else {
-                    return "Vehicle";
+                    return "Van";
                 }
             case 2:
                 return v1.getMake();
@@ -65,7 +65,20 @@ public class VehicleModel extends AbstractTableModel {
                 return "<column name>";
         }
     }
-
+    
+    public void addVehicle(Vehicle v1) {
+        getVehicles().add(v1);
+        fireTableDataChanged();
+    }
+    
+    public void removeVehicle(int v1) {
+        getVehicles().remove(v1);
+        fireTableDataChanged();
+    }
+    
+    public Vehicle getVehicle(int index) {
+        return getVehicles().get(index);
+    }
     /**
      * @return the vehicles
      */

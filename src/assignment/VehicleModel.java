@@ -43,7 +43,7 @@ public class VehicleModel extends AbstractTableModel {
             case 3:
                 return v1.getModel();
             case 4:
-                return v1.usageCost();
+                return String.format("RM%.2f",v1.usageCost());
             default:
                 return "<some data>";
         }
@@ -91,5 +91,9 @@ public class VehicleModel extends AbstractTableModel {
      */
     public void setVehicles(ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
+    }
+    
+    public void updateTable() {
+        fireTableDataChanged();
     }
 }

@@ -5,7 +5,11 @@
  */
 package assignment;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
  *
@@ -21,18 +25,52 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         
         company1 = new Company("HELP Business Group");
         vehicleModel = new VehicleModel(company1.getVehicles());
-        bookingModel = new BookingModel();
+        blankList = new ArrayList<>();
+        bookingModel = new BookingModel(getBlankList());
         avd = new AddVehicleDialog(this, true);
         uvd = new UpdateVehicleDialog(this, true);
+        cbd = new CreateBookingDialog(this, true);
         
         vehicleTable.setModel(vehicleModel);
+        vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         bookingTable.setModel(bookingModel);
+        bookingTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        avd.setCompany1(company1);
+        uvd.setCompany1(company1);
         
         setTitle(company1.getName() + " Car Rental Software");
         setLocationRelativeTo(null);
         // Set Label to Company name 
         nameLabel.setText(company1.getName());
         
+        vehicleTable.getSelectionModel().addListSelectionListener
+        (new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                int rowIndex = vehicleTable.getSelectedRow();
+                setSelectedVehicleLabel(rowIndex);
+                setBookingModel(rowIndex);
+            }
+            
+            public void setSelectedVehicleLabel(int rowIndex) {
+                if (rowIndex == -1) {
+                    activeVehicleLabel.setText("None");
+                } else {
+                    Vehicle v1 = company1.getVehicles().get(rowIndex);
+                    activeVehicleLabel.setText(v1.getRegistrationNumber());
+                }
+            }
+            
+            public void setBookingModel(int rowIndex) {
+                if (rowIndex >= 0) {
+                    Vehicle v1 = company1.getVehicles().get(rowIndex);
+                    bookingModel.setBookings(v1.getBookings());
+                    bookingModel.updateTable();
+                } else {
+                    bookingModel.setBookings(getBlankList());
+                    bookingModel.updateTable();
+                }
+            }
+        });
     }
 
     /**
@@ -127,6 +165,11 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         jScrollPane2.setViewportView(bookingTable);
 
         createBookingButton.setText("Create Booking");
+        createBookingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createBookingButtonActionPerformed(evt);
+            }
+        });
 
         deleteBookingButton.setText("Delete Booking");
 
@@ -136,9 +179,9 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
 
         displayBookingInfoButton.setText("Display Booking Information");
 
-        jLabel2.setText("Bookings for Vehicle: ");
+        jLabel2.setText("Selected vehicle: ");
 
-        activeVehicleLabel.setText("ds");
+        activeVehicleLabel.setText("None");
 
         jMenu1.setText("File");
 
@@ -188,6 +231,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -198,9 +242,8 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(activeVehicleLabel)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(activeVehicleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
@@ -228,19 +271,18 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                     .addComponent(deleteVehicleButton)
                     .addComponent(updateVehicleButton)
                     .addComponent(createBookingButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
+                        .addGap(27, 27, 27)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(updateBookingButton)
                             .addComponent(deleteBookingButton)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(activeVehicleLabel)
-                            .addComponent(jLabel2))))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(activeVehicleLabel)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(displayDeptBookingButton)
@@ -268,9 +310,10 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         Vehicle v1 = avd.getV1();
         
         if (v1 == null) {
-            JOptionPane.showMessageDialog(this, "No vehicle was added");
+            JOptionPane.showMessageDialog(this, "Cancelled");
         } else {
             vehicleModel.addVehicle(v1);
+            avd.setV1(null);
         }
     }//GEN-LAST:event_addVehicleButtonActionPerformed
 
@@ -290,11 +333,46 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No vehicle was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
+            Vehicle v1 = company1.getVehicles().get(v);
             uvd.setLocationRelativeTo(null);
+            uvd.setV1(v1);
+            uvd.setTextFields(v1.getRegistrationNumber(), v1.getMake(), 
+                    v1.getModel());
             uvd.setVisible(true);
+            boolean updated = uvd.isUpdated();
+            if (updated) {
+                vehicleModel.updateTable();
+                JOptionPane.showMessageDialog(this, "Vehicle Updated");
+            } else {
+                JOptionPane.showMessageDialog(this, "No Vehicle Updated");
+            }
         }
     }//GEN-LAST:event_updateVehicleButtonActionPerformed
 
+    private void createBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBookingButtonActionPerformed
+        int v = vehicleTable.getSelectedRow();
+        if (v == -1) {
+            JOptionPane.showMessageDialog(this, "No vehicle was selected.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Vehicle v1 = company1.getVehicles().get(v);
+            cbd.setV1(v1);
+            cbd.setLocationRelativeTo(this);
+            cbd.setVehicleLabel(v1);
+            cbd.setVisible(true);
+            Booking b1 = cbd.getB1();
+            
+            if (b1 == null) {
+                JOptionPane.showMessageDialog(this, "Cancelled");
+            } else {
+                bookingModel.addBooking(b1);
+                cbd.setB1(null);
+                vehicleModel.updateTable();
+            }
+            
+        }
+    }//GEN-LAST:event_createBookingButtonActionPerformed
+    
     /**
      * @param args the command line arguments
      */
@@ -333,9 +411,11 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     // Variables Declaration
     private Company company1;
     private VehicleModel vehicleModel;
+    private ArrayList<Booking> blankList;
     private BookingModel bookingModel;
     private AddVehicleDialog avd;
     private UpdateVehicleDialog uvd;
+    private CreateBookingDialog cbd;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel activeVehicleLabel;
@@ -363,4 +443,11 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     private javax.swing.JButton updateVehicleButton;
     private javax.swing.JTable vehicleTable;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the blankList
+     */
+    public ArrayList<Booking> getBlankList() {
+        return blankList;
+    }
 }

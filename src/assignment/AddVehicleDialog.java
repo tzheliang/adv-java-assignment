@@ -37,7 +37,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        registrationNoTextField = new javax.swing.JTextField();
+        regNoTextField = new javax.swing.JTextField();
         makeTextField = new javax.swing.JTextField();
         modelTextField = new javax.swing.JTextField();
         carRadioBtn = new javax.swing.JRadioButton();
@@ -102,7 +102,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
                         .addComponent(vanRadioBtn))
                     .addComponent(makeTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                     .addComponent(modelTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
-                    .addComponent(registrationNoTextField))
+                    .addComponent(regNoTextField))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(84, Short.MAX_VALUE)
@@ -119,7 +119,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(registrationNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(regNoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -138,7 +138,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
                     .addComponent(OKButton)
                     .addComponent(clearButton)
                     .addComponent(cancelButton))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -150,13 +150,17 @@ public class AddVehicleDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        String regNo = registrationNoTextField.getText();
+        String regNo = regNoTextField.getText().toUpperCase();
         String make = makeTextField.getText();
         String model = modelTextField.getText();
         
-        if (regNo.equals("") || make.equals("") || model.equals("")) {
+        if (textFieldIsEmpty(regNo, make, model)) {
             JOptionPane.showMessageDialog(this, "Text fields cannot be empty",
                     "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (company1.search(regNo) != null) {
+            JOptionPane.showMessageDialog(this, "Vehicle with registration"
+                    + " number " + regNo + " already exists in the system.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             if (carRadioBtn.isSelected()) {
                 setV1(new Car(regNo, make, model));
@@ -174,7 +178,8 @@ public class AddVehicleDialog extends javax.swing.JDialog {
     
     
     private void clearFields() {
-        registrationNoTextField.setText("");
+        regNoTextField.setText("");
+        regNoTextField.requestFocus();
         makeTextField.setText("");
         modelTextField.setText("");
         carRadioBtn.setSelected(true);
@@ -223,6 +228,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
     }
     // Variables
     private Vehicle v1;
+    private Company company1;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OKButton;
@@ -235,7 +241,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField makeTextField;
     private javax.swing.JTextField modelTextField;
-    private javax.swing.JTextField registrationNoTextField;
+    private javax.swing.JTextField regNoTextField;
     private javax.swing.JRadioButton vanRadioBtn;
     private javax.swing.ButtonGroup vehicleTypeGroup;
     // End of variables declaration//GEN-END:variables
@@ -252,5 +258,27 @@ public class AddVehicleDialog extends javax.swing.JDialog {
      */
     public void setV1(Vehicle v1) {
         this.v1 = v1;
+    }
+
+    /**
+     * @return the company1
+     */
+    public Company getCompany1() {
+        return company1;
+    }
+
+    /**
+     * @param company1 the company1 to set
+     */
+    public void setCompany1(Company company1) {
+        this.company1 = company1;
+    }
+    
+    public boolean textFieldIsEmpty(String regNo, String make, String model) {
+        boolean isEmpty = false;
+        if (regNo.equals("") || make.equals("") || model.equals("")) {
+            return true;
+        }
+        return isEmpty;
     }
 }

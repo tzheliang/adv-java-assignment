@@ -109,6 +109,10 @@ public abstract class Vehicle {
     public boolean isOverlap(Date dateFrom, Date dateTo) {
         // Default initialization set to true
         boolean overlap = true;
+        // If there are no bookings return false
+        if (getBookings().isEmpty()) {
+            return false;
+        }
         for (Booking aBooking: getBookings()){
             // Checks if the two dates are not within the range of dates
             if (dateFrom.before(aBooking.getDateFrom()) && 

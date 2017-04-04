@@ -5,6 +5,7 @@
  */
 package assignment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
@@ -14,13 +15,10 @@ import javax.swing.table.AbstractTableModel;
  */
 public class BookingModel extends AbstractTableModel {
     private ArrayList<Booking> bookings;
+    static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     
     public BookingModel(ArrayList<Booking> bookings) {
         setBookings(bookings);
-    }
-    
-    public BookingModel() {
-        setBookings(new ArrayList<>());
     }
     
     public int getRowCount() {
@@ -37,9 +35,9 @@ public class BookingModel extends AbstractTableModel {
             case 0:
                 return b1.getDeptName();
             case 1:
-                return b1.getDateFrom();
+                return sdf.format(b1.getDateFrom());
             case 2:
-                return b1.getDateTo();
+                return sdf.format(b1.getDateTo());
             case 3:
                 return b1.getNumberOfDays();
             default:
@@ -62,6 +60,10 @@ public class BookingModel extends AbstractTableModel {
         }
     }
     
+    public void addBooking(Booking b1) {
+        getBookings().add(b1);
+        fireTableDataChanged();
+    }
     /**
      * @return the bookings
      */
@@ -74,6 +76,10 @@ public class BookingModel extends AbstractTableModel {
      */
     public void setBookings(ArrayList<Booking> bookings) {
         this.bookings = bookings;
+    }
+    
+    public void updateTable() {
+        fireTableDataChanged();
     }
     
     

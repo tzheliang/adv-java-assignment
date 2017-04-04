@@ -5,6 +5,8 @@
  */
 package assignment;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Zheliang
@@ -17,6 +19,9 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
     public UpdateVehicleDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        setTitle("Update a Vehicle");
+        updated = false;
     }
 
     /**
@@ -47,10 +52,25 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
         jLabel3.setText("Model: ");
 
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         clearButton.setText("Clear");
+        clearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearButtonActionPerformed(evt);
+            }
+        });
 
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -65,18 +85,18 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(makeTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
                             .addComponent(regNoTextField)
-                            .addComponent(makeTextField)
-                            .addComponent(modelTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)))
+                            .addComponent(modelTextField))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(updateButton)
                         .addGap(18, 18, 18)
                         .addComponent(clearButton)
                         .addGap(18, 18, 18)
-                        .addComponent(cancelButton)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(cancelButton))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,11 +118,40 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
                     .addComponent(updateButton)
                     .addComponent(clearButton)
                     .addComponent(cancelButton))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        clearFields();
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        clearFields();
+        setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        String regNo = regNoTextField.getText().toUpperCase();
+        String make = makeTextField.getText();
+        String model = modelTextField.getText();
+        if (textFieldIsEmpty(regNo, make, model)) {
+            JOptionPane.showMessageDialog(this, "Text fields cannot be empty",
+                    "Error!", JOptionPane.ERROR_MESSAGE);
+        } else if (v1.getRegistrationNumber().equals(regNo) || company1.search(regNo) == null) {
+            v1.setRegistrationNumber(regNo);
+            v1.setMake(make);
+            v1.setModel(model);
+            setUpdated(true);
+            setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Vehicle with registration" +
+                    " number " + regNo + " already exists in the system.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,6 +196,8 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
     }
     
     private Vehicle v1;
+    private Company company1;
+    private boolean updated;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelButton;
@@ -172,5 +223,54 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
      */
     public void setV1(Vehicle v1) {
         this.v1 = v1;
+    }
+
+    /**
+     * @return the company1
+     */
+    public Company getCompany1() {
+        return company1;
+    }
+
+    /**
+     * @param company1 the company1 to set
+     */
+    public void setCompany1(Company company1) {
+        this.company1 = company1;
+    } 
+
+    /**
+     * @return the updated
+     */
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    /**
+     * @param updated the updated to set
+     */
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
+    }
+    
+    public void setTextFields(String regNo, String make, String model) {
+        regNoTextField.setText(regNo);
+        makeTextField.setText(make);
+        modelTextField.setText(model);
+    }
+    
+    public void clearFields() {
+        regNoTextField.setText("");
+        regNoTextField.requestFocus();
+        makeTextField.setText("");
+        modelTextField.setText("");
+    }
+    
+    public boolean textFieldIsEmpty(String regNo, String make, String model) {
+        boolean isEmpty = false;
+        if (regNo.equals("") || make.equals("") || model.equals("")) {
+            return true;
+        }
+        return isEmpty;
     }
 }

@@ -343,6 +343,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             if (updated) {
                 vehicleModel.updateTable();
                 JOptionPane.showMessageDialog(this, "Vehicle Updated");
+                uvd.setUpdated(false);
             } else {
                 JOptionPane.showMessageDialog(this, "No Vehicle Updated");
             }

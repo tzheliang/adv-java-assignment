@@ -5,7 +5,15 @@
  */
 package assignment;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -31,6 +39,9 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         uvd = new UpdateVehicleDialog(this, true);
         cbd = new CreateBookingDialog(this, true);
         ubd = new UpdateBookingDialog(this, true);
+        dvd = new DisplayVehicleDialog(this, true);
+        dbd = new DisplayBookingDialog(this, true);
+        bbd = new BookingByDeptDialog(this, true);
         
         vehicleTable.setModel(vehicleModel);
         vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -56,14 +67,14 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 if (rowIndex == -1) {
                     activeVehicleLabel.setText("None");
                 } else {
-                    Vehicle v1 = vehicleModel.getVehicles().get(rowIndex);
+                    Vehicle v1 = vehicleModel.getVehicle(rowIndex);
                     activeVehicleLabel.setText(v1.getRegistrationNumber());
                 }
             }
             
             public void setBookingModel(int rowIndex) {
                 if (rowIndex >= 0) {
-                    Vehicle v1 = vehicleModel.getVehicles().get(rowIndex);
+                    Vehicle v1 = vehicleModel.getVehicle(rowIndex);
                     bookingModel.setBookings(v1.getBookings());
                     bookingModel.updateTable();
                 } else {
@@ -83,6 +94,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fc = new javax.swing.JFileChooser();
         companyNameLabel = new javax.swing.JLabel();
         nameLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -110,6 +122,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         closeMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         companyNameLabel.setText("Company Name:");
 
@@ -152,6 +165,11 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         });
 
         displayVehicleInfoButton.setText("Display Vehicle Information");
+        displayVehicleInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayVehicleInfoButtonActionPerformed(evt);
+            }
+        });
 
         bookingTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -188,8 +206,18 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         });
 
         displayDeptBookingButton.setText("Display Booking By Department");
+        displayDeptBookingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayDeptBookingButtonActionPerformed(evt);
+            }
+        });
 
         displayBookingInfoButton.setText("Display Booking Information");
+        displayBookingInfoButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                displayBookingInfoButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Selected vehicle: ");
 
@@ -199,10 +227,20 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
 
         openMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
         openMenuItem.setText("Open");
+        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(openMenuItem);
 
         saveMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         saveMenuItem.setText("Save");
+        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveMenuItemActionPerformed(evt);
+            }
+        });
         jMenu1.add(saveMenuItem);
         jMenu1.add(jSeparator1);
 
@@ -243,30 +281,29 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 37, Short.MAX_VALUE)
                 .addComponent(addVehicleButton)
                 .addGap(18, 18, 18)
                 .addComponent(deleteVehicleButton)
                 .addGap(18, 18, 18)
                 .addComponent(updateVehicleButton)
                 .addGap(18, 18, 18)
-                .addComponent(createBookingButton)
-                .addGap(50, 50, 50))
+                .addComponent(displayVehicleInfoButton)
+                .addGap(35, 35, 35))
             .addGroup(layout.createSequentialGroup()
+                .addGap(108, 108, 108)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(displayVehicleInfoButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(displayBookingInfoButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(displayDeptBookingButton))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
+                        .addComponent(createBookingButton)
+                        .addGap(18, 18, 18)
                         .addComponent(deleteBookingButton)
                         .addGap(18, 18, 18)
                         .addComponent(updateBookingButton)))
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -284,7 +321,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                     .addComponent(addVehicleButton)
                     .addComponent(deleteVehicleButton)
                     .addComponent(updateVehicleButton)
-                    .addComponent(createBookingButton))
+                    .addComponent(displayVehicleInfoButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -293,15 +330,15 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                     .addComponent(activeVehicleLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteBookingButton)
-                    .addComponent(updateBookingButton))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteBookingButton)
+                    .addComponent(updateBookingButton)
+                    .addComponent(createBookingButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(displayDeptBookingButton)
-                    .addComponent(displayBookingInfoButton)
-                    .addComponent(displayVehicleInfoButton))
+                    .addComponent(displayBookingInfoButton))
                 .addContainerGap())
         );
 
@@ -310,12 +347,10 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
 
     private void closeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
         // TODO add your handling code here:
-        int result = JOptionPane.showConfirmDialog(this, "Really Close?");
+        int result = JOptionPane.showConfirmDialog(this, "Really Close?", "Warning", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION){
             System.exit(0);
-        } else if (result == JOptionPane.NO_OPTION){
-            JOptionPane.showMessageDialog(this, "Aborted");
-        } 
+        }
     }//GEN-LAST:event_closeMenuItemActionPerformed
 
     private void addVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehicleButtonActionPerformed
@@ -328,6 +363,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         } else {
             vehicleModel.addVehicle(v1);
             avd.setV1(null);
+            JOptionPane.showMessageDialog(this, "Vehicle added.");
         }
     }//GEN-LAST:event_addVehicleButtonActionPerformed
 
@@ -337,7 +373,18 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No vehicle was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            vehicleModel.removeVehicle(rowSelected);
+            if (vehicleModel.getVehicle(rowSelected).getBookings().isEmpty()) {
+                vehicleModel.removeVehicle(rowSelected);
+            } else {
+                int result = JOptionPane.showConfirmDialog(this, "This vehicle has bookings. Delete?", "Warning", JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+//                int result = JOptionPane.show
+                if (result == JOptionPane.OK_OPTION) {
+                    vehicleModel.removeVehicle(rowSelected);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Vehicle not deleted.");
+                }
+            }
+            
         }
     }//GEN-LAST:event_deleteVehicleButtonActionPerformed
 
@@ -347,7 +394,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No vehicle was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
+            Vehicle v1 = vehicleModel.getVehicle(rowSelected);
             uvd.setLocationRelativeTo(null);
             uvd.setV1(v1);
             uvd.setTextFields();
@@ -369,7 +416,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No vehicle was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
+            Vehicle v1 = vehicleModel.getVehicle(rowSelected);
             cbd.setV1(v1);
             cbd.setLocationRelativeTo(this);
             cbd.setVehicleLabel();
@@ -381,6 +428,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             } else {
                 bookingModel.addBooking(b1);
                 cbd.setB1(null);
+                JOptionPane.showMessageDialog(this, "Booking added.");
                 vehicleModel.updateTable();
                 vehicleTable.setRowSelectionInterval(0, rowSelected);
             }
@@ -399,24 +447,124 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteBookingButtonActionPerformed
 
     private void updateBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBookingButtonActionPerformed
-        int rowSelected = bookingTable.getSelectedRow();
-        System.out.println(rowSelected);
+        int vehicleRowSelected = vehicleTable.getSelectedRow();
+        int bookingRowSelected = bookingTable.getSelectedRow();
         
-        if (rowSelected == -1 ){
+        if (bookingRowSelected == -1 ){
             JOptionPane.showMessageDialog(this, "No booking was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
-            Booking b1 =  bookingModel.getBookings().get(rowSelected);
+            Vehicle v1 = vehicleModel.getVehicle(vehicleRowSelected);
+            Booking b1 =  bookingModel.getBooking(bookingRowSelected);
             ubd.setV1(v1);
             ubd.setB1(b1);
             ubd.setVehicleLabel();
             ubd.setTextFields();
             ubd.setLocationRelativeTo(this);
             ubd.setVisible(true);
+            boolean updated = ubd.isUpdated();
+            if (updated) {
+                bookingModel.updateTable();
+                vehicleModel.updateTable();
+                vehicleTable.setRowSelectionInterval(0, vehicleRowSelected);
+                JOptionPane.showMessageDialog(this, "Booking updated");
+                ubd.setUpdated(false);
+            } else {
+                JOptionPane.showMessageDialog(this, "No booking updated");
+            }
             
         }
     }//GEN-LAST:event_updateBookingButtonActionPerformed
+
+    private void displayVehicleInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayVehicleInfoButtonActionPerformed
+        if (!vehicleModel.getVehicles().isEmpty()) {
+            dvd.setC1(company1);
+            dvd.setVehicleInfoTextArea();
+            dvd.setLocationRelativeTo(this);
+            dvd.setVisible(true);
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "There are no vehicles in the system.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_displayVehicleInfoButtonActionPerformed
+
+    private void displayBookingInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayBookingInfoButtonActionPerformed
+        int rowSelected = vehicleTable.getSelectedRow();
+        if (rowSelected == -1) {
+            JOptionPane.showMessageDialog(this, "No vehicle was selected.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Vehicle v1 = vehicleModel.getVehicle(rowSelected);
+            if (!v1.getBookings().isEmpty()) {
+                dbd.setV1(v1);
+                dbd.setVehicleLabel();
+                dbd.setBookingTextArea();
+                dbd.setLocationRelativeTo(this);
+                dbd.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "There are no bookings made for the vehicle.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        }
+    }//GEN-LAST:event_displayBookingInfoButtonActionPerformed
+
+    private void displayDeptBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayDeptBookingButtonActionPerformed
+        if (vehicleModel.getVehicles().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "There are no vehicles in the system.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            bbd.setC1(company1);
+            bbd.setLocationRelativeTo(this);
+            bbd.setVisible(true);
+        }
+    }//GEN-LAST:event_displayDeptBookingButtonActionPerformed
+
+    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+        int result = fc.showSaveDialog(this);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File newFile = fc.getSelectedFile();
+            String fileName = newFile.toString();
+            FileOutputStream fos = null;
+            ObjectOutputStream oos = null;
+            try {
+                fos = new FileOutputStream(fileName);
+                oos = new ObjectOutputStream(fos);
+                oos.writeObject(company1);
+                oos.flush();
+                oos.close();
+            } catch (IOException ioe) {
+                JOptionPane.showMessageDialog(this, "File cannot be saved.", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        } 
+    }//GEN-LAST:event_saveMenuItemActionPerformed
+
+    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+        int result = fc.showOpenDialog(this);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File openFile = fc.getSelectedFile();
+            String fileName = openFile.toString();
+            FileInputStream fis = null;
+            ObjectInputStream ois = null;
+            try {
+                fis = new FileInputStream(fileName);
+                ois = new ObjectInputStream(fis);
+                
+                company1 = (Company) ois.readObject();
+                vehicleModel.setVehicles(company1.getVehicles());
+                vehicleTable.setModel(vehicleModel);
+                vehicleModel.updateTable();
+                ois.close();
+            } catch (FileNotFoundException fnfe) {
+                JOptionPane.showMessageDialog(this, fnfe.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            } catch (ClassNotFoundException cnfe ) {
+                JOptionPane.showMessageDialog(this, cnfe.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            } catch (IOException ioe) {
+                JOptionPane.showMessageDialog(this, ioe.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_openMenuItemActionPerformed
     
     /**
      * @param args the command line arguments
@@ -462,6 +610,9 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     private UpdateVehicleDialog uvd;
     private CreateBookingDialog cbd;
     private UpdateBookingDialog ubd;
+    private DisplayVehicleDialog dvd;
+    private DisplayBookingDialog dbd;
+    private BookingByDeptDialog bbd;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel activeVehicleLabel;
@@ -475,6 +626,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     private javax.swing.JButton displayBookingInfoButton;
     private javax.swing.JButton displayDeptBookingButton;
     private javax.swing.JButton displayVehicleInfoButton;
+    private javax.swing.JFileChooser fc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;

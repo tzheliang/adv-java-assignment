@@ -28,7 +28,7 @@ public class VehicleModel extends AbstractTableModel {
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        Vehicle v1 = getVehicles().get(rowIndex);
+        Vehicle v1 = getVehicle(rowIndex);
         switch (columnIndex) {
             case 0:
                 return v1.getRegistrationNumber();

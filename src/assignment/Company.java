@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * The company will have a collection of vehicles for booking
  * @author Zheliang
  */
-public class Company {
+public class Company implements java.io.Serializable {
     /**
      * The name of the company
      */
@@ -82,7 +82,7 @@ public class Company {
                         aVehicle.toString(), 
                         aVehicle.getBookings().size());
             }
-            allVehicles += String.format("The grand total cost of"
+            allVehicles += String.format("The grand total cost of "
                     + "all vehicles is RM%.2f.\n", totalCost);
         } else {
             allVehicles = "There are no vehicles stored in the company.\n";
@@ -104,7 +104,7 @@ public class Company {
                 ArrayList<Booking> deptBookingsList 
                         = aVehicle.search(dept);
                 if (deptBookingsList.size() > 0){
-                    bookingDetails += String.format("\nBookings for %s "
+                    bookingDetails += String.format("Bookings for %s "
                             + "department for %s.\n", dept, 
                             aVehicle.toString());
                     for (Booking aBooking: deptBookingsList){

@@ -12,7 +12,7 @@ import java.util.Date;
  * 
  * @author Zheliang
  */
-public class Booking {
+public class Booking implements java.io.Serializable {
     /**
      * Variable that stores the name of the department in the company
      * A department can make bookings 
@@ -102,14 +102,5 @@ public class Booking {
         long diff = (getDateTo().getTime() - getDateFrom().getTime());
         int noOfDays = (int) ((diff / (1000 * 60 * 60 * 24)) + 1);
         return noOfDays;
-    }
-    
-    public boolean equalDate(Booking aBooking) {
-        if (getDateFrom().equals(aBooking.getDateFrom()
-        ) && getDateTo().equals(aBooking.getDateTo())){
-            return true;
-        } else {
-            return false;
-        }
     }
 }

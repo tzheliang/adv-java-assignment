@@ -44,6 +44,7 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Registration No: ");
 
@@ -134,9 +135,9 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        String regNo = regNoTextField.getText().toUpperCase();
-        String make = makeTextField.getText();
-        String model = modelTextField.getText();
+        String regNo = regNoTextField.getText().toUpperCase().trim();
+        String make = makeTextField.getText().trim();
+        String model = modelTextField.getText().trim();
         if (textFieldIsEmpty(regNo, make, model)) {
             JOptionPane.showMessageDialog(this, "Text fields cannot be empty",
                     "Error!", JOptionPane.ERROR_MESSAGE);

@@ -51,6 +51,7 @@ public class CreateBookingDialog extends javax.swing.JDialog {
         cancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Department Name: ");
 
@@ -156,9 +157,9 @@ public class CreateBookingDialog extends javax.swing.JDialog {
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         
-        String deptName = deptTextField.getText();
-        String dateStrFrom = dateFromTextField.getText();
-        String dateStrTo = dateToTextField.getText();
+        String deptName = deptTextField.getText().trim();
+        String dateStrFrom = dateFromTextField.getText().trim();
+        String dateStrTo = dateToTextField.getText().trim();
         Date dateFrom;
         Date dateTo;
         

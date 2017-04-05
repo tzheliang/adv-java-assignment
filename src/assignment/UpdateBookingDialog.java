@@ -53,6 +53,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel4.setText("Vehicle Registration Number: ");
 
@@ -149,9 +150,9 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
 
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
 
-        String deptName = deptTextField.getText();
-        String dateStrFrom = dateFromTextField.getText();
-        String dateStrTo = dateToTextField.getText();
+        String deptName = deptTextField.getText().trim();
+        String dateStrFrom = dateFromTextField.getText().trim();
+        String dateStrTo = dateToTextField.getText().trim();
         Date dateFrom;
         Date dateTo;
 
@@ -161,8 +162,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
             if (dateFrom != null) {
                 if (dateTo != null) {
                     if (dateTo.compareTo(dateFrom) >= 0) {
-                        Booking temp = new Booking(deptName, dateFrom, dateTo);
-                        if (!v1.isOverlap(temp)) {
+                        if (!v1.updateIsOverlap(b1, dateTo, dateFrom)) {
                             b1.setDeptName(deptName);
                             b1.setDateFrom(dateFrom);
                             b1.setDateTo(dateTo);

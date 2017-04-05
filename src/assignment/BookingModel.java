@@ -69,6 +69,11 @@ public class BookingModel extends AbstractTableModel {
         getBookings().remove(rowSelected);
         updateTable();
     }
+    
+    public Booking getBooking(int index) {
+        return getBookings().get(index);
+        
+    }
     /**
      * @return the bookings
      */

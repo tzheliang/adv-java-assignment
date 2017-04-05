@@ -13,7 +13,7 @@ import java.util.Date;
  * car and van
  * @author Zheliang
  */
-public abstract class Vehicle {
+public abstract class Vehicle implements java.io.Serializable {
     private String registrationNumber;
     private String make;
     private String model;
@@ -128,22 +128,21 @@ public abstract class Vehicle {
         }
         return overlap;
     }
-    
-    public boolean isOverlap(Booking newBooking) {
+    public boolean updateIsOverlap(Booking b1, Date dateFrom, Date dateTo) {
         // Default initialization set to true
         boolean overlap = true;
+        ArrayList<Booking> temp = new ArrayList<Booking>(getBookings());
+        temp.remove(b1);
         // If there are no bookings return false
-        if (getBookings().isEmpty()) {
+        if (temp.isEmpty()) {
             return false;
         }
-        for (Booking aBooking: getBookings()){
+        for (Booking aBooking: temp){
             // Checks if the two dates are not within the range of dates
-            if (newBooking.equalDate(aBooking)) {
-                return false;
-            } else if (newBooking.getDateFrom().before(aBooking.getDateFrom()) && 
-                    newBooking.getDateTo().before(aBooking.getDateFrom()) ||
-                    newBooking.getDateFrom().after(aBooking.getDateTo()) && 
-                    newBooking.getDateTo().after(aBooking.getDateTo()) ){
+            if (dateFrom.before(aBooking.getDateFrom()) && 
+                    dateTo.before(aBooking.getDateFrom()) ||
+                    dateFrom.after(aBooking.getDateTo()) && 
+                    dateTo.after(aBooking.getDateTo()) ){
                 // Changes to false if it is available
                 overlap = false;
             } else {

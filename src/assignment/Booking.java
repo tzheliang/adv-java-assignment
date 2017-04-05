@@ -103,4 +103,13 @@ public class Booking {
         int noOfDays = (int) ((diff / (1000 * 60 * 60 * 24)) + 1);
         return noOfDays;
     }
+    
+    public boolean equalDate(Booking aBooking) {
+        if (getDateFrom().equals(aBooking.getDateFrom()
+        ) && getDateTo().equals(aBooking.getDateTo())){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

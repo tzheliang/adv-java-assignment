@@ -58,7 +58,7 @@ public class CreateBookingDialog extends javax.swing.JDialog {
 
         jLabel3.setText("Date To: ");
 
-        jLabel4.setText("Vehicle: ");
+        jLabel4.setText("Vehicle Registration Number: ");
 
         OKButton.setText("OK");
         OKButton.addActionListener(new java.awt.event.ActionListener() {
@@ -265,7 +265,7 @@ public class CreateBookingDialog extends javax.swing.JDialog {
         dateToTextField.setText("");
     }
     
-    public void setVehicleLabel(Vehicle v1) {
+    public void setVehicleLabel() {
         vehicleNameLabel.setText(v1.getRegistrationNumber());
     }
     

@@ -242,31 +242,31 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                                 .addComponent(activeVehicleLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(displayVehicleInfoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayBookingInfoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(displayDeptBookingButton)
-                .addContainerGap(35, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(addVehicleButton)
+                .addGap(18, 18, 18)
+                .addComponent(deleteVehicleButton)
+                .addGap(18, 18, 18)
+                .addComponent(updateVehicleButton)
+                .addGap(18, 18, 18)
+                .addComponent(createBookingButton)
+                .addGap(50, 50, 50))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(addVehicleButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(deleteVehicleButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(updateVehicleButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(createBookingButton)
-                        .addGap(50, 50, 50))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(displayVehicleInfoButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(displayBookingInfoButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(displayDeptBookingButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
                         .addComponent(deleteBookingButton)
                         .addGap(18, 18, 18)
-                        .addComponent(updateBookingButton)
-                        .addGap(170, 170, 170))))
+                        .addComponent(updateBookingButton)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,8 +350,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
             uvd.setLocationRelativeTo(null);
             uvd.setV1(v1);
-            uvd.setTextFields(v1.getRegistrationNumber(), v1.getMake(), 
-                    v1.getModel());
+            uvd.setTextFields();
             uvd.setVisible(true);
             boolean updated = uvd.isUpdated();
             if (updated) {
@@ -373,7 +372,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
             cbd.setV1(v1);
             cbd.setLocationRelativeTo(this);
-            cbd.setVehicleLabel(v1);
+            cbd.setVehicleLabel();
             cbd.setVisible(true);
             Booking b1 = cbd.getB1();
             
@@ -383,6 +382,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 bookingModel.addBooking(b1);
                 cbd.setB1(null);
                 vehicleModel.updateTable();
+                vehicleTable.setRowSelectionInterval(0, rowSelected);
             }
             
         }
@@ -400,6 +400,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
 
     private void updateBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBookingButtonActionPerformed
         int rowSelected = bookingTable.getSelectedRow();
+        System.out.println(rowSelected);
         
         if (rowSelected == -1 ){
             JOptionPane.showMessageDialog(this, "No booking was selected.",
@@ -409,6 +410,8 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             Booking b1 =  bookingModel.getBookings().get(rowSelected);
             ubd.setV1(v1);
             ubd.setB1(b1);
+            ubd.setVehicleLabel();
+            ubd.setTextFields();
             ubd.setLocationRelativeTo(this);
             ubd.setVisible(true);
             

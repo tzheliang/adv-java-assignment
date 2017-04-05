@@ -128,6 +128,31 @@ public abstract class Vehicle {
         }
         return overlap;
     }
+    
+    public boolean isOverlap(Booking newBooking) {
+        // Default initialization set to true
+        boolean overlap = true;
+        // If there are no bookings return false
+        if (getBookings().isEmpty()) {
+            return false;
+        }
+        for (Booking aBooking: getBookings()){
+            // Checks if the two dates are not within the range of dates
+            if (newBooking.equalDate(aBooking)) {
+                return false;
+            } else if (newBooking.getDateFrom().before(aBooking.getDateFrom()) && 
+                    newBooking.getDateTo().before(aBooking.getDateFrom()) ||
+                    newBooking.getDateFrom().after(aBooking.getDateTo()) && 
+                    newBooking.getDateTo().after(aBooking.getDateTo()) ){
+                // Changes to false if it is available
+                overlap = false;
+            } else {
+                // Immediately return true if the dates are in the range
+                return true;
+            }
+        }
+        return overlap;
+    }
     /**
      * Method to add a new booking to the booking collection
      * @param newBooking the new booking object

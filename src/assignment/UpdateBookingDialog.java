@@ -27,6 +27,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
         setTitle("Update a booking");
+        setUpdated(false);
     }
 
     /**
@@ -53,7 +54,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel4.setText("Vehicle: ");
+        jLabel4.setText("Vehicle Registration Number: ");
 
         OKButton.setText("OK");
         OKButton.addActionListener(new java.awt.event.ActionListener() {
@@ -160,8 +161,12 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
             if (dateFrom != null) {
                 if (dateTo != null) {
                     if (dateTo.compareTo(dateFrom) >= 0) {
-                        if (!v1.isOverlap(dateFrom, dateTo)) {
-                            setB1(new Booking(deptName, dateFrom, dateTo));
+                        Booking temp = new Booking(deptName, dateFrom, dateTo);
+                        if (!v1.isOverlap(temp)) {
+                            b1.setDeptName(deptName);
+                            b1.setDateFrom(dateFrom);
+                            b1.setDateTo(dateTo);
+                            setUpdated(true);
                             clearFields();
                             setVisible(false);
                         } else {
@@ -243,6 +248,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     private SimpleDateFormat sdf;
     private Booking b1;
     private Vehicle v1;
+    private boolean updated;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OKButton;
@@ -266,8 +272,14 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
         dateToTextField.setText("");
     }
     
-    public void setVehicleLabel(Vehicle v1) {
+    public void setVehicleLabel() {
         vehicleNameLabel.setText(v1.getRegistrationNumber());
+    }
+    
+    public void setTextFields() {
+        deptTextField.setText(b1.getDeptName());
+        dateFromTextField.setText(sdf.format(b1.getDateFrom()));
+        dateToTextField.setText(sdf.format(b1.getDateTo()));
     }
     
     public boolean textFieldIsEmpty(String deptName, String dateFromStr, String dateToStr) {
@@ -313,6 +325,20 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
      */
     public void setV1(Vehicle v1) {
         this.v1 = v1;
+    }
+
+    /**
+     * @return the updated
+     */
+    public boolean isUpdated() {
+        return updated;
+    }
+
+    /**
+     * @param updated the updated to set
+     */
+    public void setUpdated(boolean updated) {
+        this.updated = updated;
     }
 }
 

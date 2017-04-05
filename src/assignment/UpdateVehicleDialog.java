@@ -21,7 +21,7 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
         initComponents();
         
         setTitle("Update a Vehicle");
-        updated = false;
+        setUpdated(false);
     }
 
     /**
@@ -253,10 +253,10 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
         this.updated = updated;
     }
     
-    public void setTextFields(String regNo, String make, String model) {
-        regNoTextField.setText(regNo);
-        makeTextField.setText(make);
-        modelTextField.setText(model);
+    public void setTextFields() {
+        regNoTextField.setText(v1.getRegistrationNumber());
+        makeTextField.setText(v1.getMake());
+        modelTextField.setText(v1.getModel());
     }
     
     public void clearFields() {

@@ -62,7 +62,12 @@ public class BookingModel extends AbstractTableModel {
     
     public void addBooking(Booking b1) {
         getBookings().add(b1);
-        fireTableDataChanged();
+        updateTable();
+    }
+    
+    public void removeBooking(int rowSelected) {
+        getBookings().remove(rowSelected);
+        updateTable();
     }
     /**
      * @return the bookings

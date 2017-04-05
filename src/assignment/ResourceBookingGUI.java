@@ -30,6 +30,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         avd = new AddVehicleDialog(this, true);
         uvd = new UpdateVehicleDialog(this, true);
         cbd = new CreateBookingDialog(this, true);
+        ubd = new UpdateBookingDialog(this, true);
         
         vehicleTable.setModel(vehicleModel);
         vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -55,14 +56,14 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 if (rowIndex == -1) {
                     activeVehicleLabel.setText("None");
                 } else {
-                    Vehicle v1 = company1.getVehicles().get(rowIndex);
+                    Vehicle v1 = vehicleModel.getVehicles().get(rowIndex);
                     activeVehicleLabel.setText(v1.getRegistrationNumber());
                 }
             }
             
             public void setBookingModel(int rowIndex) {
                 if (rowIndex >= 0) {
-                    Vehicle v1 = company1.getVehicles().get(rowIndex);
+                    Vehicle v1 = vehicleModel.getVehicles().get(rowIndex);
                     bookingModel.setBookings(v1.getBookings());
                     bookingModel.updateTable();
                 } else {
@@ -100,6 +101,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         displayBookingInfoButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         activeVehicleLabel = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -172,8 +174,18 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         });
 
         deleteBookingButton.setText("Delete Booking");
+        deleteBookingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBookingButtonActionPerformed(evt);
+            }
+        });
 
         updateBookingButton.setText("Update Booking");
+        updateBookingButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBookingButtonActionPerformed(evt);
+            }
+        });
 
         displayDeptBookingButton.setText("Display Booking By Department");
 
@@ -211,22 +223,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(158, 158, 158)
-                .addComponent(deleteBookingButton)
-                .addGap(18, 18, 18)
-                .addComponent(updateBookingButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(addVehicleButton)
-                .addGap(18, 18, 18)
-                .addComponent(deleteVehicleButton)
-                .addGap(18, 18, 18)
-                .addComponent(updateVehicleButton)
-                .addGap(18, 18, 18)
-                .addComponent(createBookingButton)
-                .addGap(50, 50, 50))
+            .addComponent(jSeparator2)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -246,13 +243,30 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(8, 8, 8)
+                .addGap(22, 22, 22)
                 .addComponent(displayVehicleInfoButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(displayDeptBookingButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(displayBookingInfoButton)
-                .addGap(0, 20, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(displayDeptBookingButton)
+                .addContainerGap(35, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(addVehicleButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteVehicleButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(updateVehicleButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(createBookingButton)
+                        .addGap(50, 50, 50))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(deleteBookingButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(updateBookingButton)
+                        .addGap(170, 170, 170))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -271,19 +285,19 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                     .addComponent(deleteVehicleButton)
                     .addComponent(updateVehicleButton)
                     .addComponent(createBookingButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(activeVehicleLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(updateBookingButton)
-                            .addComponent(deleteBookingButton)))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(activeVehicleLabel)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteBookingButton)
+                    .addComponent(updateBookingButton))
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(displayDeptBookingButton)
                     .addComponent(displayBookingInfoButton)
@@ -318,22 +332,22 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addVehicleButtonActionPerformed
 
     private void deleteVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteVehicleButtonActionPerformed
-        int v = vehicleTable.getSelectedRow();
-        if (v == -1) {
+        int rowSelected = vehicleTable.getSelectedRow();
+        if (rowSelected == -1) {
             JOptionPane.showMessageDialog(this, "No vehicle was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            vehicleModel.removeVehicle(v);
+            vehicleModel.removeVehicle(rowSelected);
         }
     }//GEN-LAST:event_deleteVehicleButtonActionPerformed
 
     private void updateVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateVehicleButtonActionPerformed
-        int v = vehicleTable.getSelectedRow();
-        if (v == -1) {
+        int rowSelected = vehicleTable.getSelectedRow();
+        if (rowSelected == -1) {
             JOptionPane.showMessageDialog(this, "No vehicle was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            Vehicle v1 = company1.getVehicles().get(v);
+            Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
             uvd.setLocationRelativeTo(null);
             uvd.setV1(v1);
             uvd.setTextFields(v1.getRegistrationNumber(), v1.getMake(), 
@@ -351,12 +365,12 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_updateVehicleButtonActionPerformed
 
     private void createBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBookingButtonActionPerformed
-        int v = vehicleTable.getSelectedRow();
-        if (v == -1) {
+        int rowSelected = vehicleTable.getSelectedRow();
+        if (rowSelected == -1) {
             JOptionPane.showMessageDialog(this, "No vehicle was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            Vehicle v1 = company1.getVehicles().get(v);
+            Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
             cbd.setV1(v1);
             cbd.setLocationRelativeTo(this);
             cbd.setVehicleLabel(v1);
@@ -373,6 +387,33 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_createBookingButtonActionPerformed
+
+    private void deleteBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookingButtonActionPerformed
+        int rowSelected = bookingTable.getSelectedRow();
+        if (rowSelected == -1) {
+            JOptionPane.showMessageDialog(this, "No booking was selected.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            bookingModel.removeBooking(rowSelected);
+        }
+    }//GEN-LAST:event_deleteBookingButtonActionPerformed
+
+    private void updateBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBookingButtonActionPerformed
+        int rowSelected = bookingTable.getSelectedRow();
+        
+        if (rowSelected == -1 ){
+            JOptionPane.showMessageDialog(this, "No booking was selected.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Vehicle v1 = vehicleModel.getVehicles().get(rowSelected);
+            Booking b1 =  bookingModel.getBookings().get(rowSelected);
+            ubd.setV1(v1);
+            ubd.setB1(b1);
+            ubd.setLocationRelativeTo(this);
+            ubd.setVisible(true);
+            
+        }
+    }//GEN-LAST:event_updateBookingButtonActionPerformed
     
     /**
      * @param args the command line arguments
@@ -417,6 +458,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     private AddVehicleDialog avd;
     private UpdateVehicleDialog uvd;
     private CreateBookingDialog cbd;
+    private UpdateBookingDialog ubd;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel activeVehicleLabel;
@@ -437,6 +479,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem saveMenuItem;

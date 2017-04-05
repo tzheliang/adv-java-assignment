@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package assignment;
 
 import java.text.ParseException;
@@ -10,22 +5,28 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 /**
  *
  * @author Zheliang
  */
-public class CreateBookingDialog extends javax.swing.JDialog {
+public class UpdateBookingDialog extends javax.swing.JDialog {
 
     /**
-     * Creates new form CreateBookingDialog
+     * Creates new form UpdateBookingDialog
      */
-    public CreateBookingDialog(java.awt.Frame parent, boolean modal) {
+    public UpdateBookingDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
         sdf = new SimpleDateFormat("dd/MM/yyyy");
         sdf.setLenient(false);
-        setTitle("Create a booking");
+        setTitle("Update a booking");
     }
 
     /**
@@ -37,9 +38,6 @@ public class CreateBookingDialog extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         deptTextField = new javax.swing.JTextField();
         dateToTextField = new javax.swing.JTextField();
         dateFromTextField = new javax.swing.JTextField();
@@ -48,15 +46,12 @@ public class CreateBookingDialog extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
         OKButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         cancelButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jLabel1.setText("Department Name: ");
-
-        jLabel2.setText("Date From: ");
-
-        jLabel3.setText("Date To: ");
 
         jLabel4.setText("Vehicle: ");
 
@@ -74,12 +69,18 @@ public class CreateBookingDialog extends javax.swing.JDialog {
             }
         });
 
+        jLabel1.setText("Department Name: ");
+
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancelButtonActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Date From: ");
+
+        jLabel3.setText("Date To: ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -105,7 +106,7 @@ public class CreateBookingDialog extends javax.swing.JDialog {
                         .addComponent(vehicleNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(84, Short.MAX_VALUE)
+                .addContainerGap(110, Short.MAX_VALUE)
                 .addComponent(OKButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(clearButton)
@@ -145,23 +146,14 @@ public class CreateBookingDialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        clearFields();
-    }//GEN-LAST:event_clearButtonActionPerformed
-
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        clearFields();
-        setVisible(false);
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
-        
+
         String deptName = deptTextField.getText();
         String dateStrFrom = dateFromTextField.getText();
         String dateStrTo = dateToTextField.getText();
         Date dateFrom;
         Date dateTo;
-        
+
         if (!textFieldIsEmpty(deptName, dateStrFrom, dateStrTo)) {
             dateFrom = parseDate(dateStrFrom);
             dateTo = parseDate(dateStrTo);
@@ -174,28 +166,37 @@ public class CreateBookingDialog extends javax.swing.JDialog {
                             setVisible(false);
                         } else {
                             JOptionPane.showMessageDialog(this, "The booking"
-                                    + " is overlapping with another booking",
-                                    "Warning", JOptionPane.WARNING_MESSAGE);
+                                + " is overlapping with another booking",
+                                "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
                         JOptionPane.showMessageDialog(this, "The end date "
-                                + "must not be before start date", "Warning"
-                                , JOptionPane.WARNING_MESSAGE);
+                            + "must not be before start date", "Warning"
+                            , JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Enter a valid"
-                            + " date for date to", "Error",
-                            JOptionPane.ERROR_MESSAGE);
+                        + " date for date to", "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Enter a valid date for "
-                        + "date from", "Error", JOptionPane.ERROR_MESSAGE);
+                    + "date from", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
             JOptionPane.showMessageDialog(this, "Text fields cannot be empty",
-                    "Error!", JOptionPane.ERROR_MESSAGE);
+                "Error!", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_OKButtonActionPerformed
+
+    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
+        clearFields();
+    }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        clearFields();
+        setVisible(false);
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,20 +215,20 @@ public class CreateBookingDialog extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(UpdateBookingDialog.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CreateBookingDialog dialog = new CreateBookingDialog(new javax.swing.JFrame(), true);
+                UpdateBookingDialog dialog = new UpdateBookingDialog(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -239,10 +240,10 @@ public class CreateBookingDialog extends javax.swing.JDialog {
         });
     }
     
+    private SimpleDateFormat sdf;
     private Booking b1;
     private Vehicle v1;
-    private SimpleDateFormat sdf;
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OKButton;
     private javax.swing.JButton cancelButton;
@@ -258,7 +259,7 @@ public class CreateBookingDialog extends javax.swing.JDialog {
     private javax.swing.JLabel vehicleNameLabel;
     // End of variables declaration//GEN-END:variables
     
-    public void clearFields() {
+     public void clearFields() {
         deptTextField.setText("");
         deptTextField.requestFocus();
         dateFromTextField.setText("");
@@ -314,3 +315,4 @@ public class CreateBookingDialog extends javax.swing.JDialog {
         this.v1 = v1;
     }
 }
+

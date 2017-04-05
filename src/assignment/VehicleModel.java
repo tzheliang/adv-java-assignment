@@ -68,12 +68,12 @@ public class VehicleModel extends AbstractTableModel {
     
     public void addVehicle(Vehicle v1) {
         getVehicles().add(v1);
-        fireTableDataChanged();
+        updateTable();
     }
     
     public void removeVehicle(int v1) {
         getVehicles().remove(v1);
-        fireTableDataChanged();
+        updateTable();
     }
     
     public Vehicle getVehicle(int index) {

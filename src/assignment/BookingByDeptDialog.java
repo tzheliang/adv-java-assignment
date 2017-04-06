@@ -19,6 +19,8 @@ public class BookingByDeptDialog extends javax.swing.JDialog {
     public BookingByDeptDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        setTitle("Display booking by department");
     }
 
     /**

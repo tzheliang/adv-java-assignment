@@ -490,12 +490,15 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
      * @param evt the event
      */
     private void deleteBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookingButtonActionPerformed
-        int rowSelected = bookingTable.getSelectedRow();
-        if (rowSelected == -1) {
+        int vehicleRowSelected = vehicleTable.getSelectedRow();
+        int bookingRowSelected = bookingTable.getSelectedRow();
+        if (bookingRowSelected == -1) {
             JOptionPane.showMessageDialog(this, "No booking was selected.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            bookingModel.removeBooking(rowSelected);
+            bookingModel.removeBooking(bookingRowSelected);
+            vehicleModel.updateTable();
+            vehicleTable.setRowSelectionInterval(0, vehicleRowSelected);
         }
     }//GEN-LAST:event_deleteBookingButtonActionPerformed
     /**

@@ -1,12 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 06/04/2017
  */
 package assignment;
 
 /**
- *
+ * GUI Class to handle the display booking 
  * @author Zheliang
  */
 public class DisplayBookingDialog extends javax.swing.JDialog {
@@ -38,6 +38,7 @@ public class DisplayBookingDialog extends javax.swing.JDialog {
         closeButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Booking Information for Vehicle: ");
 
@@ -90,7 +91,11 @@ public class DisplayBookingDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to handle action when close button is clicked
+     * Closes the dialog
+     * @param evt 
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
@@ -136,7 +141,10 @@ public class DisplayBookingDialog extends javax.swing.JDialog {
             }
         });
     }
-    
+    // Variable declaration
+    /**
+     * Variable to store vehicle
+     */
     private Vehicle v1;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea bookingInfoTextArea;
@@ -147,15 +155,22 @@ public class DisplayBookingDialog extends javax.swing.JDialog {
     private javax.swing.JLabel vehicleLabel;
     // End of variables declaration//GEN-END:variables
     
+    /**
+     * Method to set the label to the vehicle
+     */
     public void setVehicleLabel() {
         vehicleLabel.setText(getV1().getRegistrationNumber());
     }
     
+    /**
+     * Method to set the text area of the sorted bookings of the vehicle
+     */
     public void setBookingTextArea() {
-        bookingInfoTextArea.setText(getV1().allBookings());
+        bookingInfoTextArea.setText(getV1().sortedBookings());
     }
     
     /**
+     * Method to return the vehicle
      * @return the v1
      */
     public Vehicle getV1() {
@@ -163,6 +178,7 @@ public class DisplayBookingDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the vehicle
      * @param v1 the v1 to set
      */
     public void setV1(Vehicle v1) {

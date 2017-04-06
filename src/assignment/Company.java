@@ -110,6 +110,7 @@ public class Company implements java.io.Serializable {
                     for (Booking aBooking: deptBookingsList){
                         bookingDetails += aBooking.toString() + "\n";
                     }
+                    bookingDetails += "\n";
                 }
             }
         }

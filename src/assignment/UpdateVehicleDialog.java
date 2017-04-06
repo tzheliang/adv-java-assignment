@@ -1,14 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 06/04/2017
  */
 package assignment;
 
 import javax.swing.JOptionPane;
 
 /**
- *
+ * GUI class to handle the update of vehicle
  * @author Zheliang
  */
 public class UpdateVehicleDialog extends javax.swing.JDialog {
@@ -124,24 +124,37 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to handle action when clear button is clicked
+     * Clears the text fields
+     * @param evt the event
+     */
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         clearFields();
     }//GEN-LAST:event_clearButtonActionPerformed
-
+    /**
+     * Method to handle action when cancel button is clicked
+     * Clears the text fields and closes the dialog
+     * @param evt the event
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         clearFields();
         setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
-
+    /**
+     * Method to handle action when update button is clicked
+     * Updates the selected vehicle
+     * @param evt the event
+     */
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         String regNo = regNoTextField.getText().toUpperCase().trim();
         String make = makeTextField.getText().trim();
         String model = modelTextField.getText().trim();
         if (textFieldIsEmpty(regNo, make, model)) {
-            JOptionPane.showMessageDialog(this, "Text fields cannot be empty",
-                    "Error!", JOptionPane.ERROR_MESSAGE);
-        } else if (v1.getRegistrationNumber().equals(regNo) || company1.search(regNo) == null) {
+            JOptionPane.showMessageDialog(this, "Text fields cannot be empty.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (v1.getRegistrationNumber().equals(regNo)
+                || c1.search(regNo) == null) {
             v1.setRegistrationNumber(regNo);
             v1.setMake(make);
             v1.setModel(model);
@@ -195,9 +208,18 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
             }
         });
     }
-    
+    // Variables declaration
+    /**
+     * Variable to store the vehicle
+     */
     private Vehicle v1;
-    private Company company1;
+    /**
+     * Variable to store the company
+     */
+    private Company c1;
+    /**
+     * Varaible to store the updated flag
+     */
     private boolean updated;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -213,6 +235,7 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
+     * Method to return the vehicle
      * @return the v1
      */
     public Vehicle getV1() {
@@ -220,6 +243,7 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the vehicle
      * @param v1 the v1 to set
      */
     public void setV1(Vehicle v1) {
@@ -227,20 +251,23 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
     }
 
     /**
-     * @return the company1
+     * Method to return the company
+     * @return the c1
      */
-    public Company getCompany1() {
-        return company1;
+    public Company getC1() {
+        return c1;
     }
 
     /**
-     * @param company1 the company1 to set
+     * Method to set the company
+     * @param c1 the c1 to set
      */
-    public void setCompany1(Company company1) {
-        this.company1 = company1;
+    public void setC1(Company c1) {
+        this.c1 = c1;
     } 
 
     /**
+     * Method to return the updated flag
      * @return the updated
      */
     public boolean isUpdated() {
@@ -248,18 +275,25 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the updated flag
      * @param updated the updated to set
      */
     public void setUpdated(boolean updated) {
         this.updated = updated;
     }
     
+    /**
+     * Method to set the text fields with the selected vehicle info
+     */
     public void setTextFields() {
         regNoTextField.setText(v1.getRegistrationNumber());
         makeTextField.setText(v1.getMake());
         modelTextField.setText(v1.getModel());
     }
     
+    /**
+     * Method to set the text fields to blank
+     */
     public void clearFields() {
         regNoTextField.setText("");
         regNoTextField.requestFocus();
@@ -267,6 +301,13 @@ public class UpdateVehicleDialog extends javax.swing.JDialog {
         modelTextField.setText("");
     }
     
+    /**
+     * Method to check if text fields are empty
+     * @param regNo the registration number
+     * @param make the vehicle make
+     * @param model the vehicle model
+     * @return true if any text field is blank, false if none are blank
+     */
     public boolean textFieldIsEmpty(String regNo, String make, String model) {
         boolean isEmpty = false;
         if (regNo.equals("") || make.equals("") || model.equals("")) {

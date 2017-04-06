@@ -14,9 +14,21 @@ import java.util.Date;
  * @author Zheliang
  */
 public abstract class Vehicle implements java.io.Serializable {
+    /**
+     * Variable to store registrationNumber
+     */
     private String registrationNumber;
+    /**
+     * Variable to store vehicle make
+     */
     private String make;
+    /**
+     * Variable to store model
+     */
     private String model;
+    /**
+     * Variable to store collection of bookings
+     */
     private ArrayList<Booking> bookings;
     /**
      * No argument constructor for vehicle class to set default 
@@ -128,10 +140,19 @@ public abstract class Vehicle implements java.io.Serializable {
         }
         return overlap;
     }
+    /**
+     * Method that checks if two dates are overlappnig with each other
+     * @param b1 the booking that is updated
+     * @param dateFrom the dateFrom
+     * @param dateTo the dateTo
+     * @return true if overlapping, false if not overlapping
+     */
     public boolean updateIsOverlap(Booking b1, Date dateFrom, Date dateTo) {
         // Default initialization set to true
         boolean overlap = true;
+        // Creates a temporary list to check for overlap
         ArrayList<Booking> temp = new ArrayList<Booking>(getBookings());
+        // Removes the booking to be updated from the list
         temp.remove(b1);
         // If there are no bookings return false
         if (temp.isEmpty()) {

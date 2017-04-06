@@ -1,14 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 06/04/2017
  */
 package assignment;
 
 import javax.swing.JOptionPane;
 
 /**
- *
+ * GUI class to handle the vehicle addition 
  * @author Zheliang
  */
 public class AddVehicleDialog extends javax.swing.JDialog {
@@ -144,21 +144,29 @@ public class AddVehicleDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to handle action when cancel button is clicked
+     * Cancels the vehicle addition and closes the dialog
+     * @param evt the event
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         clearFields();
         setVisible(false);
     }//GEN-LAST:event_cancelButtonActionPerformed
-
+    /**
+     * Method to handle action when OK button is clicked
+     * Adds a new vehicle
+     * @param evt 
+     */
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
         String regNo = regNoTextField.getText().toUpperCase().trim();
         String make = makeTextField.getText().trim();
         String model = modelTextField.getText().trim();
         
         if (textFieldIsEmpty(regNo, make, model)) {
-            JOptionPane.showMessageDialog(this, "Text fields cannot be empty",
-                    "Error!", JOptionPane.ERROR_MESSAGE);
-        } else if (company1.search(regNo) != null) {
+            JOptionPane.showMessageDialog(this, "Text fields cannot be empty.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (c1.search(regNo) != null) {
             JOptionPane.showMessageDialog(this, "Vehicle with registration"
                     + " number " + regNo + " already exists in the system.",
                     "Warning", JOptionPane.WARNING_MESSAGE);
@@ -172,12 +180,19 @@ public class AddVehicleDialog extends javax.swing.JDialog {
             setVisible(false);
         }
     }//GEN-LAST:event_OKButtonActionPerformed
-
+    /**
+     * Method to handle action when clear button is clicked
+     * Clears all the text fields and set default radio button selection
+     * @param evt the event
+     */
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         clearFields();
     }//GEN-LAST:event_clearButtonActionPerformed
     
-    
+    /**
+     * Method to set all text fields to blank and sets radio button to default
+     * on car
+     */
     private void clearFields() {
         regNoTextField.setText("");
         regNoTextField.requestFocus();
@@ -228,8 +243,14 @@ public class AddVehicleDialog extends javax.swing.JDialog {
         });
     }
     // Variables
+    /**
+     * Variable to store the vehicle
+     */
     private Vehicle v1;
-    private Company company1;
+    /**
+     * Variable to store the company
+     */
+    private Company c1;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton OKButton;
@@ -248,6 +269,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     /**
+     * Method to return the vehicle
      * @return the v1
      */
     public Vehicle getV1() {
@@ -255,6 +277,7 @@ public class AddVehicleDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the vehicle
      * @param v1 the v1 to set
      */
     public void setV1(Vehicle v1) {
@@ -262,19 +285,28 @@ public class AddVehicleDialog extends javax.swing.JDialog {
     }
 
     /**
-     * @return the company1
+     * Method to reutn the company
+     * @return the c1
      */
-    public Company getCompany1() {
-        return company1;
+    public Company getC1() {
+        return c1;
     }
 
     /**
-     * @param company1 the company1 to set
+     * Method to set the company
+     * @param c1 the c1 to set
      */
-    public void setCompany1(Company company1) {
-        this.company1 = company1;
+    public void setC1(Company c1) {
+        this.c1 = c1;
     }
     
+    /**
+     * Method to check if the text fields are empty
+     * @param regNo the registration number
+     * @param make the make
+     * @param model the model
+     * @return true if any of the text fields are empty, false if all filled
+     */
     public boolean textFieldIsEmpty(String regNo, String make, String model) {
         boolean isEmpty = false;
         if (regNo.equals("") || make.equals("") || model.equals("")) {

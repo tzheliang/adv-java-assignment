@@ -1,7 +1,7 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 06/04/2017
  */
 package assignment;
 
@@ -20,7 +20,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 /**
- *
+ * GUI Class to handle IO of the program
  * @author Zheliang
  */
 public class ResourceBookingGUI extends javax.swing.JFrame {
@@ -31,6 +31,7 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     public ResourceBookingGUI() {
         initComponents();
         
+        // Initialise variables
         company1 = new Company("HELP Business Group");
         vehicleModel = new VehicleModel(company1.getVehicles());
         blankList = new ArrayList<>();
@@ -43,18 +44,29 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         dbd = new DisplayBookingDialog(this, true);
         bbd = new BookingByDeptDialog(this, true);
         
+        // Set tables
         vehicleTable.setModel(vehicleModel);
         vehicleTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         bookingTable.setModel(bookingModel);
         bookingTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        avd.setCompany1(company1);
-        uvd.setCompany1(company1);
         
+        // Set JFrame title bar and position
         setTitle(company1.getName() + " Car Rental Software");
         setLocationRelativeTo(null);
+        
+        // Set JDialog to center on parent
+        avd.setLocationRelativeTo(this);
+        uvd.setLocationRelativeTo(this);
+        cbd.setLocationRelativeTo(this);
+        ubd.setLocationRelativeTo(this);
+        dvd.setLocationRelativeTo(this);
+        dbd.setLocationRelativeTo(this);
+        bbd.setLocationRelativeTo(this);
+        
         // Set Label to Company name 
         nameLabel.setText(company1.getName());
         
+        // Set listener for vehicle table
         vehicleTable.getSelectionModel().addListSelectionListener
         (new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
@@ -63,6 +75,11 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 setBookingModel(rowIndex);
             }
             
+            /**
+             * Method to set the vehicle label based on selected row index
+             * of the vehicle table
+             * @param rowIndex 
+             */
             public void setSelectedVehicleLabel(int rowIndex) {
                 if (rowIndex == -1) {
                     activeVehicleLabel.setText("None");
@@ -71,7 +88,11 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                     activeVehicleLabel.setText(v1.getRegistrationNumber());
                 }
             }
-            
+            /**
+             * Method to set the booking model based on selected row index
+             * of the vehicle table
+             * @param rowIndex 
+             */
             public void setBookingModel(int rowIndex) {
                 if (rowIndex >= 0) {
                     Vehicle v1 = vehicleModel.getVehicle(rowIndex);
@@ -344,29 +365,43 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to handle action when close menu item is clicked
+     * Closes the program
+     * @param evt the event
+     */
     private void closeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeMenuItemActionPerformed
-        // TODO add your handling code here:
-        int result = JOptionPane.showConfirmDialog(this, "Really Close?", "Warning", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
+    int result = JOptionPane.showConfirmDialog(this, "Really Close?",
+            "Warning", JOptionPane.YES_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result == JOptionPane.OK_OPTION){
             System.exit(0);
         }
     }//GEN-LAST:event_closeMenuItemActionPerformed
-
+    /**
+     * Method to handle action when addVehicle button is clicked
+     * Adds a vehicle to the vehicle model
+     * @param evt the event
+     */
     private void addVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addVehicleButtonActionPerformed
-        avd.setLocationRelativeTo(this);
+        avd.setC1(company1);
         avd.setVisible(true);
         Vehicle v1 = avd.getV1();
         
         if (v1 == null) {
-            JOptionPane.showMessageDialog(this, "Cancelled");
+            JOptionPane.showMessageDialog(this, "No Vehicle added.",
+                    "Information", JOptionPane.INFORMATION_MESSAGE);
         } else {
             vehicleModel.addVehicle(v1);
             avd.setV1(null);
-            JOptionPane.showMessageDialog(this, "Vehicle added.");
+            JOptionPane.showMessageDialog(this, "Vehicle added.",
+                    "Information", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_addVehicleButtonActionPerformed
-
+    /**
+     * Method to handle action when deleteButton button is clicked
+     * Delete the selected vehicle
+     * @param evt the event
+     */
     private void deleteVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteVehicleButtonActionPerformed
         int rowSelected = vehicleTable.getSelectedRow();
         if (rowSelected == -1) {
@@ -376,18 +411,25 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             if (vehicleModel.getVehicle(rowSelected).getBookings().isEmpty()) {
                 vehicleModel.removeVehicle(rowSelected);
             } else {
-                int result = JOptionPane.showConfirmDialog(this, "This vehicle has bookings. Delete?", "Warning", JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
-//                int result = JOptionPane.show
+                int result = JOptionPane.showConfirmDialog(this, "This "
+                        + "vehicle has bookings. Delete?", 
+                        "Warning", JOptionPane.YES_NO_OPTION, 
+                        JOptionPane.WARNING_MESSAGE);
                 if (result == JOptionPane.OK_OPTION) {
                     vehicleModel.removeVehicle(rowSelected);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Vehicle not deleted.");
+                    JOptionPane.showMessageDialog(this, "Vehicle not deleted.", 
+                            "Information", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
             
         }
     }//GEN-LAST:event_deleteVehicleButtonActionPerformed
-
+    /**
+     * Method to handle action when updateVehicle button is clicked
+     * Updates the selected vehicle
+     * @param evt the event
+     */
     private void updateVehicleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateVehicleButtonActionPerformed
         int rowSelected = vehicleTable.getSelectedRow();
         if (rowSelected == -1) {
@@ -395,21 +437,27 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                     "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             Vehicle v1 = vehicleModel.getVehicle(rowSelected);
-            uvd.setLocationRelativeTo(null);
+            uvd.setC1(company1);
             uvd.setV1(v1);
             uvd.setTextFields();
             uvd.setVisible(true);
             boolean updated = uvd.isUpdated();
             if (updated) {
                 vehicleModel.updateTable();
-                JOptionPane.showMessageDialog(this, "Vehicle Updated");
+                JOptionPane.showMessageDialog(this, "Vehicle Updated.", 
+                        "Information", JOptionPane.INFORMATION_MESSAGE);
                 uvd.setUpdated(false);
             } else {
-                JOptionPane.showMessageDialog(this, "No Vehicle Updated");
+                JOptionPane.showMessageDialog(this, "No Vehicle Updated.", 
+                        "Information", JOptionPane.INFORMATION_MESSAGE);
             }
         }
     }//GEN-LAST:event_updateVehicleButtonActionPerformed
-
+    /**
+     * Method to handle action when createBooking button is clicked
+     * Creates a new booking for selected vehicle
+     * @param evt the event
+     */
     private void createBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createBookingButtonActionPerformed
         int rowSelected = vehicleTable.getSelectedRow();
         if (rowSelected == -1) {
@@ -418,24 +466,29 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
         } else {
             Vehicle v1 = vehicleModel.getVehicle(rowSelected);
             cbd.setV1(v1);
-            cbd.setLocationRelativeTo(this);
             cbd.setVehicleLabel();
             cbd.setVisible(true);
             Booking b1 = cbd.getB1();
             
             if (b1 == null) {
-                JOptionPane.showMessageDialog(this, "Cancelled");
+                JOptionPane.showMessageDialog(this, "No Booking Added.",
+                        "Information", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 bookingModel.addBooking(b1);
                 cbd.setB1(null);
-                JOptionPane.showMessageDialog(this, "Booking added.");
+                JOptionPane.showMessageDialog(this, "Booking added.", 
+                        "Information", JOptionPane.INFORMATION_MESSAGE);
                 vehicleModel.updateTable();
                 vehicleTable.setRowSelectionInterval(0, rowSelected);
             }
             
         }
     }//GEN-LAST:event_createBookingButtonActionPerformed
-
+    /**
+     * Method to handle action when deleteBooking button is clicked
+     * Deletes the selected booking
+     * @param evt the event
+     */
     private void deleteBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBookingButtonActionPerformed
         int rowSelected = bookingTable.getSelectedRow();
         if (rowSelected == -1) {
@@ -445,7 +498,11 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             bookingModel.removeBooking(rowSelected);
         }
     }//GEN-LAST:event_deleteBookingButtonActionPerformed
-
+    /**
+     * Method to handle action when updateBooking button is clicked
+     * Updates the selected booking
+     * @param evt the event
+     */
     private void updateBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBookingButtonActionPerformed
         int vehicleRowSelected = vehicleTable.getSelectedRow();
         int bookingRowSelected = bookingTable.getSelectedRow();
@@ -460,7 +517,6 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             ubd.setB1(b1);
             ubd.setVehicleLabel();
             ubd.setTextFields();
-            ubd.setLocationRelativeTo(this);
             ubd.setVisible(true);
             boolean updated = ubd.isUpdated();
             if (updated) {
@@ -475,19 +531,27 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_updateBookingButtonActionPerformed
-
+    /**
+     * Method to handle action when displayVehicleInfo button is clicked
+     * Displays a window to display all vehicle information
+     * @param evt the event
+     */
     private void displayVehicleInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayVehicleInfoButtonActionPerformed
         if (!vehicleModel.getVehicles().isEmpty()) {
             dvd.setC1(company1);
             dvd.setVehicleInfoTextArea();
-            dvd.setLocationRelativeTo(this);
             dvd.setVisible(true);
             
         } else {
-            JOptionPane.showMessageDialog(this, "There are no vehicles in the system.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "There are no vehicles in the "
+                    + "system.", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_displayVehicleInfoButtonActionPerformed
-
+    /**
+     * Method to handle action when displayBookingInfo button is clicked
+     * Displays a window to display all booking info for the selected vehicle
+     * @param evt the event
+     */
     private void displayBookingInfoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayBookingInfoButtonActionPerformed
         int rowSelected = vehicleTable.getSelectedRow();
         if (rowSelected == -1) {
@@ -499,26 +563,34 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 dbd.setV1(v1);
                 dbd.setVehicleLabel();
                 dbd.setBookingTextArea();
-                dbd.setLocationRelativeTo(this);
                 dbd.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "There are no bookings made for the vehicle.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "There are no bookings "
+                        + "made for the vehicle.", "Information", 
+                        JOptionPane.INFORMATION_MESSAGE);
             }
 
         }
     }//GEN-LAST:event_displayBookingInfoButtonActionPerformed
-
+    /**
+     * Method to handle action when displayDeptBooking button is clicked
+     * Displays a window to display booking info based on department 
+     * @param evt the event
+     */
     private void displayDeptBookingButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayDeptBookingButtonActionPerformed
         if (vehicleModel.getVehicles().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "There are no vehicles in the system.",
-                    "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "There are no vehicles in "
+                    + "the system.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             bbd.setC1(company1);
-            bbd.setLocationRelativeTo(this);
             bbd.setVisible(true);
         }
     }//GEN-LAST:event_displayDeptBookingButtonActionPerformed
-
+    /**
+     * Method to handle action when save menu item is clicked
+     * Saves all objects into a file on to the computer
+     * @param evt the event
+     */
     private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
         int result = fc.showSaveDialog(this);
         
@@ -534,11 +606,16 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 oos.flush();
                 oos.close();
             } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(this, "File cannot be saved.", "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, ioe.getMessage(), 
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         } 
     }//GEN-LAST:event_saveMenuItemActionPerformed
-
+    /**
+     * Method to handle action when open menu item is clicked
+     * Reads a file to retrieve all objects and stores in the program
+     * @param evt the event
+     */
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         int result = fc.showOpenDialog(this);
         
@@ -557,11 +634,14 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
                 vehicleModel.updateTable();
                 ois.close();
             } catch (FileNotFoundException fnfe) {
-                JOptionPane.showMessageDialog(this, fnfe.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, fnfe.getMessage(), 
+                        "Error", JOptionPane.ERROR_MESSAGE);
             } catch (ClassNotFoundException cnfe ) {
-                JOptionPane.showMessageDialog(this, cnfe.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, cnfe.getMessage(), 
+                        "Error", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ioe) {
-                JOptionPane.showMessageDialog(this, ioe.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this, ioe.getMessage(), 
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_openMenuItemActionPerformed
@@ -602,16 +682,49 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     }
     
     // Variables Declaration
+    /**
+     * Variable to store the company
+     */
     private Company company1;
+    /**
+     * Variable to store the vehicle table model
+     */
     private VehicleModel vehicleModel;
+    /**
+     * Variable to store a blank collection of booking
+     */
     private ArrayList<Booking> blankList;
+    /**
+     * Variable to store the booking table model
+     */
     private BookingModel bookingModel;
+    /**
+     * Variable to store the add vehicle dialog
+     */
     private AddVehicleDialog avd;
+    /**
+     * Variable to store the update vehicle dialog
+     */
     private UpdateVehicleDialog uvd;
+    /**
+     * Variable to store the create booking dialog
+     */
     private CreateBookingDialog cbd;
+    /**
+     * Variable to store the update booking dialog
+     */
     private UpdateBookingDialog ubd;
+    /**
+     * Variable to store the display vehicle dialog
+     */
     private DisplayVehicleDialog dvd;
+    /**
+     * Variable to store the display booking dialog
+     */
     private DisplayBookingDialog dbd;
+    /**
+     * Variable to store the booking by dept dialog
+     */
     private BookingByDeptDialog bbd;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -644,7 +757,8 @@ public class ResourceBookingGUI extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     /**
-     * @return the blankList
+     * Method to retrieve the blank arraylist
+     * @return the blankList 
      */
     public ArrayList<Booking> getBlankList() {
         return blankList;

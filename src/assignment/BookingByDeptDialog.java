@@ -1,14 +1,14 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 06/04/2017
  */
 package assignment;
 
 import javax.swing.JOptionPane;
 
 /**
- *
+ * GUI class to handle the display booking by department
  * @author Zheliang
  */
 public class BookingByDeptDialog extends javax.swing.JDialog {
@@ -39,6 +39,7 @@ public class BookingByDeptDialog extends javax.swing.JDialog {
         jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setText("Department Name: ");
 
@@ -98,17 +99,25 @@ public class BookingByDeptDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to handle action when search button is clicked
+     * Retrieves the list of bookings made according to the department
+     * @param evt the event
+     */
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
         String deptName = deptNameTextField.getText().trim();
         if (deptName.equals("")) {
-            JOptionPane.showMessageDialog(this, "Text field cannot be empty",
-                    "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Text field cannot be empty.",
+                    "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             bookingByDeptTextArea.setText(getC1().getBookingByDept(deptName));
         }
     }//GEN-LAST:event_searchButtonActionPerformed
-
+    /**
+     * Method to handle action when cancel button is clicked
+     * Cancels the operation and closes the dialog
+     * @param evt the event
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         clearFields();
         setVisible(false);
@@ -155,7 +164,10 @@ public class BookingByDeptDialog extends javax.swing.JDialog {
             }
         });
     }
-    
+    // Variable declaration
+    /**
+     * Variable to store the company
+     */
     private Company c1;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -168,21 +180,25 @@ public class BookingByDeptDialog extends javax.swing.JDialog {
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
     
-    
+    /**
+     * Method to set text fields to blank
+     */
     public void clearFields() {
         deptNameTextField.setText("");
         deptNameTextField.requestFocus();
         bookingByDeptTextArea.setText("");
     }
     /**
-     * @return the company1
+     * Method to return the company
+     * @return the c1
      */
     public Company getC1() {
         return c1;
     }
 
     /**
-     * @param company1 the company1 to set
+     * Method to set the company
+     * @param company1 the c1 to set
      */
     public void setC1(Company company1) {
         this.c1 = company1;

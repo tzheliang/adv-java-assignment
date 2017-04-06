@@ -1,13 +1,13 @@
-package assignment;
-
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 06/04/2017
  */
 
+package assignment;
+
 /**
- *
+ * GUI class to handle the display of all vehicles
  * @author Zheliang
  */
 public class DisplayVehicleDialog extends javax.swing.JDialog {
@@ -52,7 +52,7 @@ public class DisplayVehicleDialog extends javax.swing.JDialog {
             }
         });
 
-        jLabel1.setText("All Vehicles Information");
+        jLabel1.setText("All Vehicle Information");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,7 +87,11 @@ public class DisplayVehicleDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to handle action when close button is clicked
+     * Closes the dialog
+     * @param evt the event
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         setVisible(false);
     }//GEN-LAST:event_closeButtonActionPerformed
@@ -134,6 +138,10 @@ public class DisplayVehicleDialog extends javax.swing.JDialog {
         });
     }
     
+    //Variable declaration
+    /**
+     * Variable to store the company
+     */
     private Company c1;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -144,11 +152,15 @@ public class DisplayVehicleDialog extends javax.swing.JDialog {
     private javax.swing.JTextArea vehicleInfoTextArea;
     // End of variables declaration//GEN-END:variables
     
+    /**
+     * Method to set the text area of all the vehicles 
+     */
     public void setVehicleInfoTextArea() {
         vehicleInfoTextArea.setText(getC1().allVehicles());
     }
     
     /**
+     * Method to return the company
      * @return the c1
      */
     public Company getC1() {
@@ -156,6 +168,7 @@ public class DisplayVehicleDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the company
      * @param c1 the c1 to set
      */
     public void setC1(Company c1) {

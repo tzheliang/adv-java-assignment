@@ -1,3 +1,8 @@
+/*
+ * NAME: TAN ZHELIANG
+ * STUDENT ID: B1400653
+ * DATE: 06/04/2017
+ */
 package assignment;
 
 import java.text.ParseException;
@@ -5,14 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
- *
+ * GUI class to handle the update of booking
  * @author Zheliang
  */
 public class UpdateBookingDialog extends javax.swing.JDialog {
@@ -147,7 +146,11 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    /**
+     * Method to handle action when OK button is clicked
+     * Updates the selected booking
+     * @param evt the event
+     */
     private void OKButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OKButtonActionPerformed
 
         String deptName = deptTextField.getText().trim();
@@ -171,33 +174,41 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
                             setVisible(false);
                         } else {
                             JOptionPane.showMessageDialog(this, "The booking"
-                                + " is overlapping with another booking",
+                                + " is overlapping with another booking.",
                                 "Warning", JOptionPane.WARNING_MESSAGE);
                         }
                     } else {
                         JOptionPane.showMessageDialog(this, "The end date "
-                            + "must not be before start date", "Warning"
+                            + "must not be before start date.", "Warning"
                             , JOptionPane.WARNING_MESSAGE);
                     }
                 } else {
                     JOptionPane.showMessageDialog(this, "Enter a valid"
-                        + " date for date to", "Error",
-                        JOptionPane.ERROR_MESSAGE);
+                        + " date for date to.", "Warning",
+                        JOptionPane.WARNING_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Enter a valid date for "
-                    + "date from", "Error", JOptionPane.ERROR_MESSAGE);
+                    + "date from.", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Text fields cannot be empty",
-                "Error!", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Text fields cannot be empty.",
+                "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_OKButtonActionPerformed
-
+    /**
+     * Method to handle action when clear button is clicked
+     * Clears the text fields 
+     * @param evt the event
+     */
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         clearFields();
     }//GEN-LAST:event_clearButtonActionPerformed
-
+    /**
+     * Method to handle action when cancel button is clicked
+     * Clears the text fields and closes the dialog
+     * @param evt the event
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         clearFields();
         setVisible(false);
@@ -244,10 +255,22 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
             }
         });
     }
-    
+    // Variables declaration
+    /**
+     * Variable to store the simple date format
+     */
     private SimpleDateFormat sdf;
+    /**
+     * Variable to store the booking
+     */
     private Booking b1;
+    /**
+     * Variable to store the vehicle
+     */
     private Vehicle v1;
+    /**
+     * Variable to store updated flag
+     */
     private boolean updated;
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -265,6 +288,9 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     private javax.swing.JLabel vehicleNameLabel;
     // End of variables declaration//GEN-END:variables
     
+    /**
+     * Method set the text fields to blank
+     */
      public void clearFields() {
         deptTextField.setText("");
         deptTextField.requestFocus();
@@ -272,16 +298,29 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
         dateToTextField.setText("");
     }
     
+     /**
+      * Method to set the vehicle label
+      */
     public void setVehicleLabel() {
         vehicleNameLabel.setText(v1.getRegistrationNumber());
     }
     
+    /**
+     * Method to set the text fields with booking info
+     */
     public void setTextFields() {
         deptTextField.setText(b1.getDeptName());
         dateFromTextField.setText(sdf.format(b1.getDateFrom()));
         dateToTextField.setText(sdf.format(b1.getDateTo()));
     }
     
+    /**
+     * Method to check if text field is empty
+     * @param deptName departmentName
+     * @param dateFromStr date From
+     * @param dateToStr date To
+     * @return true if any text field is empty, false if none is empty
+     */
     public boolean textFieldIsEmpty(String deptName, String dateFromStr, String dateToStr) {
         boolean isEmpty = false;
         if (deptName.equals("") || dateFromStr.equals("") || dateToStr.equals("")) {
@@ -290,6 +329,11 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
         return isEmpty;
     }
     
+    /**
+     * Method to parse the date from string
+     * @param dateStr date string
+     * @return the date if no errors, null if error
+     */
     public Date parseDate(String dateStr) {
         try {
             Date aDate = sdf.parse(dateStr);
@@ -300,6 +344,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     }
     
     /**
+     * Method to return the booking
      * @return the b1
      */
     public Booking getB1() {
@@ -307,6 +352,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the booking
      * @param b1 the b1 to set
      */
     public void setB1(Booking b1) {
@@ -314,6 +360,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to return the vehicle
      * @return the v1
      */
     public Vehicle getV1() {
@@ -321,6 +368,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the vehicle
      * @param v1 the v1 to set
      */
     public void setV1(Vehicle v1) {
@@ -328,6 +376,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to return the updated flag
      * @return the updated
      */
     public boolean isUpdated() {
@@ -335,6 +384,7 @@ public class UpdateBookingDialog extends javax.swing.JDialog {
     }
 
     /**
+     * Method to set the updated flag
      * @param updated the updated to set
      */
     public void setUpdated(boolean updated) {
